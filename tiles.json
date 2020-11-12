@@ -1,0 +1,1655 @@
+[
+  {
+    "x": 1,
+    "y": 1,
+    "biome": "offices",
+    "walls": [
+      [
+        2,
+        1
+      ]
+    ],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 1,
+    "biome": "offices",
+    "walls": [
+      [
+        1,
+        2
+      ]
+    ],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 1,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 1,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 1,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 1,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 1,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "landmark",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 1,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 1,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 1,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 1,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "river",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 1,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 1,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 1,
+    "biome": "sycamore_forest",
+    "walls": [
+      [
+        14,
+        2
+      ]
+    ],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 1,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "chest_1",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 2,
+    "biome": "offices",
+    "walls": [
+      [
+        2,
+        2
+      ]
+    ],
+    "composition": "janice_boss",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 2,
+    "biome": "offices",
+    "walls": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 2,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 2,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 2,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 2,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 2,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 2,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 2,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 2,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 2,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 2,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "river",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 2,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 2,
+    "biome": "sycamore_forest",
+    "walls": [
+      [
+        14,
+        1
+      ],
+      [
+        15,
+        2
+      ]
+    ],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 2,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "leah_boss",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 3,
+    "biome": "offices",
+    "walls": [
+      [
+        1,
+        4
+      ]
+    ],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 3,
+    "biome": "offices",
+    "walls": [
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "composition": "landmark",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 3,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 3,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 3,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 3,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 3,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 3,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 3,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 3,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 3,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 3,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 3,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "river",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 3,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 3,
+    "biome": "sycamore_forest",
+    "walls": [
+      [
+        15,
+        2
+      ]
+    ],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 4,
+    "biome": "offices",
+    "walls": [
+      [
+        1,
+        3
+      ]
+    ],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 4,
+    "biome": "offices",
+    "walls": [
+      [
+        2,
+        3
+      ]
+    ],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 4,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 4,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 4,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 4,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 4,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 4,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 4,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 4,
+    "biome": "lava_lake",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 4,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 4,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 4,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 4,
+    "biome": "sycamore_forest",
+    "walls": [
+      [
+        13,
+        4
+      ],
+      [
+        14,
+        5
+      ]
+    ],
+    "composition": "drawbridge",
+    "item_key": "chain"
+  },
+  {
+    "x": 15,
+    "y": 4,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 5,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 5,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 5,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 5,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 5,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 5,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 5,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 5,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 5,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 5,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 5,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 5,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 5,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 5,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 5,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "river",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 6,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 6,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 6,
+    "biome": "offices",
+    "walls": [],
+    "composition": "landmark",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 6,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 6,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 6,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 6,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 6,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "stonehenge",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 6,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 6,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 6,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 6,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 6,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "landmark",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 6,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 6,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 7,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 7,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 7,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 7,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 7,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 7,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 7,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 7,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "village",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 7,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 7,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 7,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 7,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 7,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 7,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 7,
+    "biome": "sycamore_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 8,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 8,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 8,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 8,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 8,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 8,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 8,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 8,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 8,
+    "biome": "grass_lands",
+    "walls": [
+      [
+        8,
+        8
+      ],
+      [
+        10,
+        8
+      ],
+      [
+        9,
+        7
+      ],
+      [
+        9,
+        9
+      ]
+    ],
+    "composition": "grave_boss",
+    "item_key": "graveyard_key"
+  },
+  {
+    "x": 10,
+    "y": 8,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 8,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 8,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 8,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 8,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 8,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 9,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 9,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 9,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 9,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 9,
+    "biome": "offices",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 9,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 9,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 9,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 9,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 9,
+    "biome": "grass_lands",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 9,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 9,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 9,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 9,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 9,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 10,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 10,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "landmark",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 10,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "key",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 10,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 10,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 10,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 10,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 10,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 10,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 10,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 10,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 10,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 10,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 10,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 10,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "mountain",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 11,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 11,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 11,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 11,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 11,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 11,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "landmark",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 11,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 11,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 11,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 11,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 11,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 11,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 11,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 11,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "entrance",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 11,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 12,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 12,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 12,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "giant_boss",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 12,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 12,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 12,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 12,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 12,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 12,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 12,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "landmark",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 12,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 12,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 12,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "mountain",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 12,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 12,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 1,
+    "y": 13,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 2,
+    "y": 13,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 3,
+    "y": 13,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 4,
+    "y": 13,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 5,
+    "y": 13,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 6,
+    "y": 13,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 7,
+    "y": 13,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 8,
+    "y": 13,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 9,
+    "y": 13,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 10,
+    "y": 13,
+    "biome": "tundra",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 11,
+    "y": 13,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  },
+  {
+    "x": 12,
+    "y": 13,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "mountain",
+    "item_key": ""
+  },
+  {
+    "x": 13,
+    "y": 13,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "chest_2",
+    "item_key": ""
+  },
+  {
+    "x": 14,
+    "y": 13,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "barry_goblin_boss",
+    "item_key": ""
+  },
+  {
+    "x": 15,
+    "y": 13,
+    "biome": "goblin_forest",
+    "walls": [],
+    "composition": "",
+    "item_key": ""
+  }
+]
