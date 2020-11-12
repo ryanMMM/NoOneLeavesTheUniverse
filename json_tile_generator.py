@@ -6,6 +6,7 @@ def write_tiles(file_data, file_path):
     """writes the file data provided into the json file provided"""
 
     with open(file_path, 'w', newline='\n') as tile_file_path:
+
         json.dump(file_data, tile_file_path, indent=2)
 
 
@@ -13,10 +14,15 @@ def set_up_tile_and_biomes(x_bound, y_bound, biome_bounds):
     """sets up a list of dictionaries for each tile including their x, y, and biome parameters"""
 
     json_output = []
+
     for y in range(1, y_bound + 1):
+
         for x in range(1, x_bound + 1):
+
             # loops through every x coordinate in every row of y coordinates
+
             for element in biome_bounds:
+
                 x_lower_limit = biome_bounds[element]['x'][0]
                 x_upper_limit = biome_bounds[element]['x'][1]
                 y_lower_limit = biome_bounds[element]['y'][0]
@@ -24,10 +30,12 @@ def set_up_tile_and_biomes(x_bound, y_bound, biome_bounds):
                 # sets up the dimensions of the specific biome
 
                 if x_lower_limit <= x <= x_upper_limit and y_lower_limit <= y <= y_upper_limit:
+
                     # checks which biome that the coordinate from x and y fall into
                     tile_data = {'x': x, 'y': y, 'biome': element, 'walls': [], 'composition': '', 'item_key': ''}
                     json_output.append(tile_data)
                     # appends the coordinate to the output with the correct biome
+
     return json_output
 
 
@@ -36,6 +44,7 @@ def set_up_walls(x_bound, dict_of_tiles_with_walls, json_list):
     and adds them to their respective tile's dictionary in the list"""
 
     for element in dict_of_tiles_with_walls:
+
         actual_element = literal_eval(element)
         # turns the string representation of the list into an actual list
         x_value = actual_element[0]
@@ -45,6 +54,7 @@ def set_up_walls(x_bound, dict_of_tiles_with_walls, json_list):
         # the way to calculate the index of the tile needed is using the equation above
         json_list[index_in_json]['walls'] = dict_of_tiles_with_walls[element]
         # sets a new key 'walls' to the value of the list of walls for that tile
+
     return json_list
 
 
@@ -53,6 +63,7 @@ def set_up_composition(x_bound, dict_of_tiles_with_composition, json_list):
     and adds them to their respective tile's dictionary in the list"""
 
     for element in dict_of_tiles_with_composition:
+
         actual_element = literal_eval(element)
         x_value = actual_element[0]
         y_value = actual_element[1]
@@ -60,6 +71,7 @@ def set_up_composition(x_bound, dict_of_tiles_with_composition, json_list):
         # as the tiles are added to the list incrementing x to it's limit within every one increment of y
         # the way to calculate the index of the tile needed is using the equation above
         json_list[index_in_json_list]['composition'] = dict_of_tiles_with_composition[element]
+
     return json_list
 
 
@@ -68,6 +80,7 @@ def set_up_item_keys(x_bound, dict_of_tiles_with_item_keys, json_list):
     dictionaries in the list"""
 
     for element in dict_of_tiles_with_item_keys:
+
         actual_element = literal_eval(element)
         x_value = actual_element[0]
         y_value = actual_element[1]
@@ -75,6 +88,7 @@ def set_up_item_keys(x_bound, dict_of_tiles_with_item_keys, json_list):
         # as the tiles are added to the list incrementing x to it's limit within every one increment of y
         # the way to calculate the index of the tile needed is using the equation above
         json_list[index_in_json_list]['item_key'] = dict_of_tiles_with_item_keys[element]
+
     return json_list
 
 
@@ -85,6 +99,7 @@ def set_up_tiles(x_bound, y_bound, biome_bounds, tiles_with_walls, tiles_with_co
     json_list = set_up_walls(x_bound, tiles_with_walls, json_list)
     json_list = set_up_composition(x_bound, tiles_with_compositions, json_list)
     json_list = set_up_item_keys(x_bound, tiles_with_item_keys, json_list)
+
     return json_list
 
 

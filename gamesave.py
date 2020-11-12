@@ -588,6 +588,7 @@ class GameSave:
 
         # fight loop, ends when hostile or player health reaches 0 (when either dies)
         while self.player.is_alive() and self.hostile.is_alive():
+
             time.sleep(0.4)
             print(self.player.display_battle_stats())
             time.sleep(0.4)
@@ -603,10 +604,14 @@ class GameSave:
         # if the hostile is the one who's health reached 0, the player is prompted to spare or kill the hostile
         # otherwise the player has to reset progress to the beginning of the day
         if not self.hostile.is_alive():
+
             print("You Win!")
             self.spare_or_kill()
+
             return True
+
         else:
+
             return False
 
     def boss_fight(self, boss):
@@ -618,24 +623,35 @@ class GameSave:
             boss_fight_choice = str_input()
 
             if boss_fight_choice == 'f' or boss_fight_choice == 'fight':
+
                 starting_health = self.player.get_health()
                 self.hostile = boss_object_dictionary[boss]
+
                 if self.fight():
+
                     # initiates a boss fight and checks if the player wins
                     self.tile_list[self.player.get_tile_list_index()].remove_composition()
                     # if boss is defeated, it is removed from the tile
                     self.player_tile = self.tile_list[self.player.get_tile_list_index()]
                     # removes the boss from the dictionary as it has been defeated
                     self.wilderness()
+
                     break
+
                 else:
+
                     self.player.die(starting_health)
                     self.player.respawn()
                     self.enter_new_tile()
+
                     break
+
             elif boss_fight_choice == 'l' or boss_fight_choice == 'leave':
+
                 self.enter_new_tile()
+
             else:
+
                 print("Invalid input")
 
     def player_turn(self):
@@ -648,12 +664,19 @@ class GameSave:
 
             # brings up the attack menu or action menu based on the users input
             if player_choice == 'a' or player_choice == 'attack':
+
                 self.choose_attack()
+
                 break
+
             elif player_choice == 'p' or player_choice == 'perform':
+
                 self.choose_action()
+
                 break
+
             else:
+
                 print("Invalid input")
                 # prompts the user again if invalid input
 
@@ -666,28 +689,41 @@ class GameSave:
             index = 1
 
             for attack in self.player.weapon.get_attacks():
+
                 print(str(index) + ". " + str(attack))
                 index += 1
+
             print(str(index) + ". Back out")
+
             attack_choice = int_input()
 
             if attack_choice < index:
+
                 # checks if the user has chosen a valid attack that is in range of the attack numbers
                 # if so, the attack is executed and the hostile loses and appropriate amount of health
                 chosen_attack = self.player.weapon.get_attacks()[attack_choice - 1]
                 base_damage = self.player.weapon.get_damage()
                 attack_multiplier = chosen_attack.get_multiplier()
                 damage = base_damage * attack_multiplier * self.attack_amplification
+
                 if str(chosen_attack.get_buff()):
+
                     self.hostile.add_buff(DirectedBuff(chosen_attack.buff))
+
                 self.hostile.lose_health_from_attack(damage, str(self.player))
                 self.attack_amplification = 1
+
                 break
+
             elif attack_choice == index:
+
                 self.player_turn()
+
                 break
                 # if the player backs out, the return the the player turn method
+
             else:
+
                 print("Invalid input")
                 # prompts the user again if invalid input is given
 
@@ -701,14 +737,23 @@ class GameSave:
 
             # executes an action based on the player's choice, calling the action's respective methods
             if action_choice == 'h' or action_choice == 'heal':
+
                 self.player.heal()
+
             elif action_choice == 'a' or action_choice == 'amplify':
+
                 self.attack_amplification += 1.5
+
             elif action_choice == 'u' or action_choice == 'use':
+
                 self.choose_potion()
+
             elif action_choice == 'b' or action_choice == 'back':
+
                 self.player_turn()
+
             else:
+
                 print("Invalid input")
                 # prompts the user again if invalid input is given
 
@@ -722,8 +767,10 @@ class GameSave:
             potions = self.player.get_potions()
 
             for potion in potions:
+
                 print(str(index) + ". " + str(potion))
                 index += 1
+
             print(str(index) + ". Back out")
             potion_choice = int_input()
             potion = potions[potion_choice]
@@ -731,10 +778,14 @@ class GameSave:
             if potion_choice < index:
 
                 self.player.remove_item_from_inventory(potion)
+
             elif potion_choice == index:
+
                 self.choose_action()
                 # if the player backs out, the return the the choose action method
+
             else:
+
                 print("Invalid input")
                 # prompts the user again if invalid input is given
 
@@ -753,10 +804,15 @@ class GameSave:
 
             # starts the player object's respective methods based on the player's choice
             if spare_or_kill_choice == 's' or spare_or_kill_choice == 'spare':
+
                 self.player.spare()
+
             elif spare_or_kill_choice == 'k' or spare_or_kill_choice == 'kill':
+
                 self.player.kill()
+
             else:
+
                 print("Invalid input")
                 # prompts the user again if invalid input is given
 
@@ -764,18 +820,24 @@ class GameSave:
         """unpacks tile attributes from JSON file and creates a list of objects with those attributes"""
 
         with open('tiles.json') as t:
+
             tile_attribute_list = json.load(t)
 
         for tile in tile_attribute_list:
+
             self.tile_list.append(Tile(tile['x'], tile['y'], tile['biome'], tile['composition'], tile['item_key']))
 
     def set_up_difficulty_multiplier(self, difficulty_multiplier):
         """sets the hostiles and bosses to the correct difficulty multiplier"""
 
         for hostile_group in hostile_object_dictionary:
+
             for hostile_list in hostile_object_dictionary[hostile_group]:
+
                 hostile_list.change_difficulty_multiplier(difficulty_multiplier)
+
         for boss_key in boss_object_dictionary:
+
             boss_object_dictionary[boss_key].change_difficulty_multiplier(difficulty_multiplier)
 
     def get_attribute_dictionary(self):
@@ -787,6 +849,7 @@ class GameSave:
             'village_coordinates': self.village_coordinates,
             'player': self.player.get_attribute_dictionary()
         }
+
         return attribute_dictionary
 
     def get_undefeated_bosses(self):

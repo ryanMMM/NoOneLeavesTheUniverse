@@ -51,6 +51,7 @@ class Helmet(Armour):
 class Chestplate(Armour):
 
     def __init__(self, name='yankees t-shirt', defence=5, armour_set='starting_clothes', cost=0):
+
         super().__init__(name,  defence, armour_set, cost)
         self.slot = 'chest'
 
@@ -58,5 +59,6 @@ class Chestplate(Armour):
 class Boots(Armour):
 
     def __init__(self, name='converse sneakers', defence=2, armour_set='starting_clothes', cost=0):
+
         super().__init__(name,  defence, armour_set, cost)
         self.slot = 'feet'

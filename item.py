@@ -18,6 +18,7 @@ class Item:
 
         details = self.name
         details += ":\nDescription:" + self.description
+
         return details
 
     def get_type(self):
@@ -48,6 +49,7 @@ class Potion(Item):
 
         details = self.name
         details += self.buff.display_details()
+
         return details
 
 

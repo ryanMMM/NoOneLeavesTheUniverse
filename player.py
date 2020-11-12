@@ -95,23 +95,34 @@ class Player:
         # CHECKING EDGE CASES
 
         if destination_coordinates[0] > self.gamesave.get_x_size():
+
             print("You cannot move north, you are on the north edge of the UNIVERSE")
             self.gamesave.wilderness()
+
         elif destination_coordinates[0] < 1:
+
             print("You cannot move south, you are on the south edge of the UNIVERSE")
             self.gamesave.wilderness()
+
         elif destination_coordinates[1] > self.gamesave.get_y_size():
+
             print("You cannot move east, you are on the east edge of the UNIVERSE")
             self.gamesave.wilderness()
+
         elif destination_coordinates[1] < 1:
+
             print("You cannot move west, you are on the west edge of the UNIVERSE")
             self.gamesave.wilderness()
+
         elif self.gamesave.tile_list[destination_index].is_passable(destination_entrance):
+
             self.update_coordinates(destination_coordinates)
             self.update_tile_list_index()
             self.gamesave.enter_new_tile()
             self.gamesave.wilderness()
+
         else:
+
             self.gamesave.wilderness()
 
     def update_coordinates(self, coordinates):
@@ -137,6 +148,7 @@ class Player:
         """displays the details of a specific item in the player's inventory"""
 
         inspected_item = self.inventory[index - 1]
+
         return inspected_item.get_details()
 
     def change_gamesave(self, gamesave):
@@ -148,9 +160,13 @@ class Player:
         """checks if the player's inventory is full and whether they can pick up more items or not"""
 
         if len(self.inventory) >= self.inventory_space:
+
             print("Your inventory is full")
+
             return True
+
         else:
+
             return False
 
     def armour_set_check(self):
@@ -159,9 +175,12 @@ class Player:
         set_list = [armour_piece.get_set() for armour_piece in self.armour.values()]
 
         if len(set(set_list)) == 1:
+
             # puts list into set, if the set has length of 1, then all armour set values are equal
             return True
+
         else:
+
             return False
 
     def equip_armour(self, armour_piece):
@@ -182,8 +201,11 @@ class Player:
         """equips a new item into the players inventory"""
 
         if not self.inventory_full():
+
             self.inventory.append(item)
+
         else:
+
             print("Your inventory is full. Item has been adeed to your safe")
             self.safe[item.get_type()].append(item)
 
@@ -191,6 +213,7 @@ class Player:
         """removes an item from the inventory"""
 
         if item in self.inventory:
+
             self.safe[item.get_type()].append(item)
             self.inventory.remove(item)
 
@@ -198,25 +221,33 @@ class Player:
         """allows the player to look through their inventory and send items to their safe"""
 
         while len(self.inventory) > 0:
+
             # inventory interface is not available if a player's inventory is empty
             self.display_inventory()
             print("Would you like to (S)end an item to your safe or (B)ack out")
             inventory_choice = str_input()
 
             if inventory_choice == 'send' or inventory_choice == 's':
+
                 print("Which item would you like to send to your safe (enter the number)")
                 safe_choice = int_input()
 
                 if safe_choice <= len(self.inventory):
+
                     self.safe[self.inventory[safe_choice - 1].get_type()].append(self.inventory[safe_choice - 1])
                     self.inventory.pop(safe_choice - 1)
+
                 else:
+
                     print("Invalid Input")
                     # prompts the player again if invalid input
 
             elif inventory_choice == 'back' or inventory_choice == 'b':
+
                 break
+
             else:
+
                 print("Invalid Input")
                 # prompts the user again if invalid input
 
@@ -292,6 +323,7 @@ class Player:
                     self.safe['weapon'].append(self.weapon)
                     self.weapon = self.safe['weapon'][weapon_choice - 1]
                     self.safe['weapon'].pop(weapon_choice - 1)
+
                     break
 
                 else:
@@ -308,6 +340,7 @@ class Player:
                     self.safe['armour'].append(self.armour[self.safe['armour'][armour_choice - 1].get_slot()])
                     self.armour[armour_choice - 1] = self.safe['armour'][armour_choice - 1]
                     self.safe['armour'].pop(armour_choice - 1)
+
                     break
 
                 else:
@@ -334,7 +367,9 @@ class Player:
     def display_safe(self):
 
         print("SAFE:")
+
         for item_group in self.safe:
+
             print("\n" + item_group.capitalize() + ":\n")
             display_elements_from_list(self.safe[item_group])
 
@@ -348,12 +383,17 @@ class Player:
         """causes the player to gain charge"""
 
         if self.charge < self.default_charge:
+
             print("Charging...")
             time.sleep(1)
+
             if self.charge + self.charge_add_amount <= self.default_charge:
+
                 print("You have gained " + str(self.charge_add_amount) + " charge")
                 self.charge += self.charge_add_amount
+
             else:
+
                 print("You have gained " + str(self.default_charge - self.charge) + " charge")
                 self.charge = self.default_charge
 
@@ -370,48 +410,73 @@ class Player:
         # TODO buff that negates defence
 
         for buff in self.active_buffs:
+
             if buff.get_duration():
+
                 if buff.get_effect() == 'block_healing':
+
                     print("Your healing has been blocked!")
                     self.heal_amount = 0
+
                 elif buff.get_effect() == 'block_defence':
+
                     print("Your defence has been removed!")
                     self.defence = 0
+
                 elif buff.get_effect() == 'regeneration':
+
                     self.add_health(self.default_heal_amount * buff.get_effectiveness())
+
                 elif buff.get_effect() == 'poison':
+
                     self.lose_health((self.heal_amount / 2) * buff.get_effectiveness())
+
                 buff.apply_buff()
+
             else:
+
                 if buff.get_effect() == 'block_healing':
+
                     self.heal_amount = self.default_heal_amount
                     # removing the changes made by the buff when the duration runs out
+
                 elif buff.get_effect() == 'block_defence':
+
                     self.defence = self.calculate_defence()
+
                 self.remove_buff(buff)
 
     def affordable(self, price):
         """checks if player can afford an item by comparing the parameter price to the player's coin balance"""
 
         if self.coins >= price:
+
             return True
+
         else:
+
             return False
 
     def purchase(self, price):
         """causes the player to lose an amount of money after a purchase"""
 
         if self.affordable(price):
+
             self.coins -= price
+
             return True
+
         else:
+
             print("You cannot afford this")
+
             return False
 
     def reforge_weapon(self):
         """reforges the player's weapon for 20 coins"""
 
         if self.purchase(20):
+
             self.weapon.reforge()
             print("Your weapon has been reforged, it is now " + str(self.weapon.get_condition()))
 
@@ -419,7 +484,9 @@ class Player:
         """allows the player to buy an item for a price and adds it to their inventory"""
 
         if not self.inventory_full():
+
             if self.purchase(price):
+
                 self.inventory.append(item)
                 print(item + " has been added to your inventory")
 
@@ -490,10 +557,12 @@ class Player:
                 multiplier = upgrade_progression_dictionary['health'][index]
 
                 if self.max_health / multiplier == self.default_health:
+
                     self.max_health = self.default_health * upgrade_progression_dictionary['health']
                     print("Your health has been upgraded by " +
                           str((self.default_health * upgrade_progression_dictionary['health'][index]) - self.max_health)
                           + " points")
+
                     break
 
                 index += 1
@@ -525,10 +594,12 @@ class Player:
                 add_amount = upgrade_progression_dictionary['charge'][index]
 
                 if self.max_charge - add_amount == self.default_charge:
+
                     self.max_charge = self.default_health + upgrade_progression_dictionary['charge']
                     print("Your charge has been upgraded by " +
                           str((self.default_charge + upgrade_progression_dictionary['charge'][index + 1])
                               - self.max_charge) + " points")
+
                     break
 
                 index += 1
@@ -563,10 +634,12 @@ class Player:
                 add_amount = upgrade_progression_dictionary['attack_amplification'][index]
 
                 if self.attack_amplification_amount - add_amount == self.default_attack_amplification_amount:
+
                     self.max_charge = self.default_health + upgrade_progression_dictionary['attack_amplification']
                     print("Your attack amplification has been upgraded by " +
                           str((self.default_charge + upgrade_progression_dictionary['attack_amplification'][index + 1])
                               - self.attack_amplification_amount) + " points")
+
                     break
 
                 index += 1
@@ -575,26 +648,38 @@ class Player:
         """adds the amount of health specified in the parameter to the player's health"""
 
         if self.health + health_add_amount < self.max_health:
+
             self.health += health_add_amount
             print("You have replenished " + str(self.heal_amount) + " health")
+
         elif self.health < self.max_health:
+
             health_add_amount = self.max_health - self.health
             print("You have replenished " + str(health_add_amount) + " health")
             self.health = self.max_health
+
         else:
+
             print("You are already at max health")
+
             return False
+
         return health_add_amount
 
     def lose_health(self, health_lose_amount):
         """subtracts the amount of health specified in the paramter from the player's health"""
 
         health_lose_amount = (health_lose_amount - (health_lose_amount * (self.defence / 100)))
+
         if self.health - health_lose_amount > 0:
+
             self.health -= health_lose_amount
+
         else:
+
             health_lose_amount = self.health
             self.health = 0
+
         return health_lose_amount
 
     def set_health(self, health):
@@ -606,6 +691,7 @@ class Player:
         """calculates the defence by summing up the defence points in each armour set"""
 
         defence = {armour_piece: armour_piece.get_defence() for armour_piece in self.armour.values()}
+
         return sum(defence.values())
 
     def display_battle_stats(self):
@@ -615,6 +701,7 @@ class Player:
         battle_stats += self.name.capitalize() + "'s Health: " + str(self.health) + "\n"
         battle_stats += self.name.capitalize() + "'s Charge: " + str(self.charge) + "\n"
         battle_stats += "#" * (22 + len(self.name)) + "\n"
+
         return battle_stats
 
     def display_monetary_stats(self):
@@ -622,26 +709,37 @@ class Player:
 
         shop_stats = self.name + "'s coins: " + str(self.coins) + "\n"
         shop_stats += self.name + "'s Reputation: " + str(self.reputation)
+
         return shop_stats
 
     def display_navigation_stats(self):
         """displays player attributes and information relevant to navigation through the map"""
 
         navigation_stats = self.name + "'s coordinates: [" + str(self.x) + ", " + str(self.y) + "]\n"
+
         return navigation_stats
 
     def get_destination_coordinates_and_entrance(self, direction, steps):
         """returns the coordinates of the tile that the player chooses to walk to, and the tile they will enter from"""
 
         if direction == 'n':
+
             return {'destination': [self.x, self.y + steps], 'entrance': [self.x, self.y + steps - 1]}
+
         elif direction == 's':
+
             return {'destination': [self.x, self.y - steps], 'entrance': [self.x, self.y - steps + 1]}
+
         elif direction == 'e':
+
             return {'destination': [self.x + steps, self.y], 'entrance': [self.x + steps - 1, self.y]}
+
         elif direction == 'w':
+
             return {'destination': [self.x - steps, self.y], 'entrance': [self.x - steps + 1, self.y]}
+
         else:
+
             raise ValueError
 
     def get_destination_tile_index(self, direction, steps):
@@ -654,24 +752,28 @@ class Player:
         """loops through the inventory and returns a list of potions"""
 
         potions = [item for item in self.inventory if item.get_type() == 'potion']
+
         return potions
 
     def get_collectibles(self):
         """loops through the inventory and returns a list of collectibles"""
 
         collectibles = [item for item in self.inventory if item.get_type() == 'collectible']
+
         return collectibles
 
     def get_potion_names(self):
         """returns the names of the potions within the inventory"""
 
         potion_names = [str(potion) for potion in self.get_potions()]
+
         return potion_names
 
     def get_collectible_names(self):
         """returns the names of the collectibles within the inventory"""
 
         collectible_names = [str(collectible) for collectible in self.get_collectibles()]
+
         return collectible_names
 
     def get_attribute_dictionary(self):
@@ -699,6 +801,7 @@ class Player:
             'charge': self.charge,
             'charge_add_amount': self.charge_add_amount,
         }
+
         return attribute_dictionary
 
     def get_coordinates(self):

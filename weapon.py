@@ -37,6 +37,7 @@ class Weapon:
         """chooses a random attack from the weapon's list of attacks"""
 
         random_attack = random.choice(self.attacks)
+
         return random_attack
 
     def reforge(self):
@@ -46,12 +47,19 @@ class Weapon:
         reforge_chance = random.randint(1, 10)
 
         if reforge_chance <= 2:
+
             self.condition = "puny"
+
         elif reforge_chance <= 5:
+
             self.condition = "sturdy"
+
         elif reforge_chance <= 8:
+
             self.condition = "hardened"
+
         else:
+
             self.condition = "draconic"
 
         self.damage = int(self.default_damage * condition_dictionary[self.condition]['damage_multiplier'])
@@ -79,6 +87,7 @@ class Weapon:
         details += "\nCondition: " + self.condition
         details += "\nCritical hit chance: " + str(self.critical_chance)
         details += "\nCritical hit damage: " + str(self.critical_multiplier * self.damage)
+
         return details
 
     def get_default_damage(self):
