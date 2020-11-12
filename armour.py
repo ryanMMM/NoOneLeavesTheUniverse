@@ -1,6 +1,7 @@
 class Armour:
 
     def __init__(self, name, defence, armour_set, cost):
+
         self.name = name
         self.defence = defence
         # base defence points for an armour piece
@@ -42,6 +43,7 @@ class Armour:
 class Helmet(Armour):
 
     def __init__(self, name='baseball cap', defence=3, armour_set='starting_clothes', cost=0):
+
         super().__init__(name, defence, armour_set, cost)
         self.slot = 'head'
 

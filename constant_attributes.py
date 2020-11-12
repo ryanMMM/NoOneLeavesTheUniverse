@@ -131,14 +131,14 @@ attack_attribute_dictionary = {
         ],
 }
 
-armor_attribute_dictionary = {
+armour_attribute_dictionary = {
     "ice":
         {
             "helmet":
                 {
                     "name": "Frozen Mask",
                     "defense": 10,
-                    "armor_set": "ice",
+                    "armour_set": "ice",
                     "cost": 30
 
                 },
@@ -146,7 +146,7 @@ armor_attribute_dictionary = {
                 {
                     "name": "Frozen Chestplate",
                     "defense": 15,
-                    "armor_set": "ice",
+                    "armour_set": "ice",
                     "cost": 50
 
                 },
@@ -154,7 +154,7 @@ armor_attribute_dictionary = {
                 {
                     "name": "Frozen Mask",
                     "defense": 5,
-                    "armor_set": "ice",
+                    "armour_set": "ice",
                     "cost": 20
                 }
         },
@@ -164,7 +164,7 @@ armor_attribute_dictionary = {
                 {
                     "name": "Goblin Helm",
                     "defense": 20,
-                    "armor_set": "goblin",
+                    "armour_set": "goblin",
                     "cost": 70
 
                 },
@@ -172,7 +172,7 @@ armor_attribute_dictionary = {
                 {
                     "name": "Goblin Chainmail",
                     "defense": 25,
-                    "armor_set": "goblin",
+                    "armour_set": "goblin",
                     "cost": 130
 
                 },
@@ -180,7 +180,7 @@ armor_attribute_dictionary = {
                 {
                     "name": "Goblin Shoes",
                     "defense": 10,
-                    "armor_set": "goblin",
+                    "armour_set": "goblin",
                     "cost": 50
                 }
         },
@@ -190,7 +190,7 @@ armor_attribute_dictionary = {
                 {
                     "name": "Hallowed Horns",
                     "defense": 15,
-                    "armor_set": "hallowed",
+                    "armour_set": "hallowed",
                     "cost": 60
 
                 },
@@ -198,7 +198,7 @@ armor_attribute_dictionary = {
                 {
                     "name": "Hallowed Robe",
                     "defense": 20,
-                    "armor_set": "hallowed",
+                    "armour_set": "hallowed",
                     "cost": 120
 
                 },
@@ -206,17 +206,17 @@ armor_attribute_dictionary = {
                 {
                     "name": "Hallowed Sandals",
                     "defense": 5,
-                    "armor_set": "hallowed",
+                    "armour_set": "hallowed",
                     "cost": 40
                 }
         },
-    "office_armor":
+    "office_armour":
         {
             "helmet":
                 {
                     "name": "Office Hat",
                     "defense": 15,
-                    "armor_set": "office",
+                    "armour_set": "office",
                     "cost": 30
 
                 },
@@ -224,7 +224,7 @@ armor_attribute_dictionary = {
                 {
                     "name": "Office Suit",
                     "defense": 20,
-                    "armor_set": "office",
+                    "armour_set": "office",
                     "cost": 100
 
                 },
@@ -232,17 +232,17 @@ armor_attribute_dictionary = {
                 {
                     "name": "Office Shoes",
                     "defense": 5,
-                    "armor_set": "office",
+                    "armour_set": "office",
                     "cost": 20
                 }
         },
-    "universe_armor":
+    "universe_armour":
         {
             "helmet":
                 {
                     "name": "UNIVERSE Hat",
                     "defense": 25,
-                    "armor_set": "universe",
+                    "armour_set": "universe",
                     "cost": 200
 
                 },
@@ -250,7 +250,7 @@ armor_attribute_dictionary = {
                 {
                     "name": "UNIVERSE Shirt",
                     "defense": 30,
-                    "armor_set": "universe",
+                    "armour_set": "universe",
                     "cost": 300
 
                 },
@@ -258,7 +258,7 @@ armor_attribute_dictionary = {
                 {
                     "name": "UNIVERSE Boots",
                     "defense": 15,
-                    "armor_set": "universe",
+                    "armour_set": "universe",
                     "cost": 100
                 }
         },

@@ -42,6 +42,7 @@ class DirectedBuff:
         """every round in a fight the duration of a buff is checked by this method, when it reaches 0, the buff stops"""
 
         self.duration_counter -= 1
+
         return self.duration_counter
 
 

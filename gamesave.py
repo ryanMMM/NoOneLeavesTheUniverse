@@ -75,7 +75,9 @@ class GameSave:
         print("The UNIVERSE")
         time.sleep(4)
         clear_screen()
+
         if not self.played_before:
+
             self.initialize_player()
 
     def initialize_player(self):
@@ -84,6 +86,7 @@ class GameSave:
         clear_screen()
         print("Enter your name warrior")
         name = str_input()
+
         while True:
 
             print("What difficulty would you like to play on?\n(E)asy\n(M)edium\n(H)ard")
@@ -91,17 +94,28 @@ class GameSave:
 
             # changes difficulty multiplier based on user input
             if difficulty == 'e' or difficulty == 'easy':
+
                 self.difficulty_multiplier = 0.8
+
                 break
+
             elif difficulty == 'm' or difficulty == 'medium':
+
                 self.difficulty_multiplier = 1
+
                 break
+
             elif difficulty == 'h' or difficulty == 'hard':
+
                 self.difficulty_multiplier = 1.2
+
                 break
+
             else:
+
                 print("Invalid input")
                 time.sleep(2)
+
                 self.initialize_player()
                 # prompts the user again if invalid input is given through recursion of the method
 
@@ -146,16 +160,22 @@ class GameSave:
         """starts a random event with a 10% chance"""
 
         random_event_chance = random.randint(1, 10)
+
         if random_event_chance == 1:
+
             starting_health = self.player.get_health()
             print("A hostile appeared!")
             time.sleep(0.25)
             clear_screen()
             self.hostile = random.choice(hostile_object_dictionary[biome])
             # loads a random hostile from the list of hostiles
+
             if self.fight():
+
                 self.wilderness()
+
             else:
+
                 self.player.die(starting_health)
                 self.player.respawn()
                 self.enter_new_tile()
@@ -172,19 +192,29 @@ class GameSave:
             wilderness_choice = str_input()
 
             if wilderness_choice == 'n' or wilderness_choice == 'north':
+
                 # TODO implement regex and steps
+
                 self.player.move('n', 1)
                 break
+
             elif wilderness_choice == 's' or wilderness_choice == 'south':
+
                 self.player.move('s', 1)
                 break
+
             elif wilderness_choice == 'e' or wilderness_choice == 'east':
+
                 self.player.move('e', 1)
                 break
+
             elif wilderness_choice == 'w' or wilderness_choice == 'west':
+
                 self.player.move('w', 1)
                 break
+
             else:
+
                 print("Invalid input")
 
     def enter_new_tile(self):
@@ -192,17 +222,29 @@ class GameSave:
 
         self.player.update_tile_list_index()
         self.player_tile = self.tile_list[self.player.get_tile_list_index()]
+
         if self.player_tile.get_composition()[-4:] == 'boss':
+
             self.boss_fight(self.player_tile.get_composition())
+
         elif self.player_tile.get_composition() == 'drawbridge':
+
             pass
+
         elif self.player_tile.get_composition() == 'landmarks':
+
             pass
+
         elif self.player_tile.get_composition() == 'chest':
+
             pass
+
         elif self.player_tile.get_composition() == 'village':
+
             self.gates_of_village()
+
         else:
+
             self.random_event(self.player_tile.get_biome())
             self.wilderness()
 
@@ -299,8 +341,10 @@ class GameSave:
                 print("POTIONS: \n")
 
                 for potion in potion_list:
+
                     print(str(index) + ". " + str(potion).capitalize() + "\nPrice: " + str(potion.get_cost()) + "\n")
                     index += 1
+
                 print(str(index) + ". Back out\n")
 
                 print("Which potion would you like to purchase? (Enter the number of the potion)")
@@ -343,8 +387,10 @@ class GameSave:
                 print("WEAPONS: \n")
 
                 for weapon in weapon_list:
+
                     print(str(index) + ". " + str(weapon).capitalize() + "\nPrice: " + str(weapon.get_cost()) + "\n")
                     index += 1
+
                 print(str(index) + ". Back out\n")
 
                 print("Which weapon would you like to purchase? (Enter the number of the weapon)")
