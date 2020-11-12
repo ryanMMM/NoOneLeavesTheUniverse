@@ -78,7 +78,8 @@ class Player:
         """moves the player to the village"""
 
         self.update_coordinates(self.gamesave.village_coordinates)
-        self.tile_list_index = calculate_tile_list_index(self.gamesave.get_x_size(), self.coordinates)
+        self.update_tile_list_index()
+        # sets coordinates to village coordinates, and updates the tile list index
 
     def heal(self):
         """heals the player, replenishing their health"""
@@ -88,12 +89,15 @@ class Player:
     def move(self, direction, steps):
         """moves player to their intended destination"""
 
+        # TODO maybe fix because this lets people skip over walls?
         destination_coordinates = self.get_destination_coordinates_and_entrance(direction, steps)['destination']
+        # stores the coordinates of the tile the player has chosen to move to
         destination_entrance = self.get_destination_coordinates_and_entrance(direction, steps)['entrance']
+        # stores the coordinates of the tile the player will enter from
         destination_index = self.get_destination_tile_index(direction, steps)
+        # stores the tile index of the tile the player has chosen to move to
 
-        # CHECKING EDGE CASES
-
+        # checking edge cases
         if destination_coordinates[0] > self.gamesave.get_x_size():
 
             print("You cannot move north, you are on the north edge of the UNIVERSE")
@@ -120,6 +124,8 @@ class Player:
             self.update_tile_list_index()
             self.gamesave.enter_new_tile()
             self.gamesave.wilderness()
+            # if the player can move through the tile, then the player's coordinates are updated
+            # and they are taken back to the wilderness game loop
 
         else:
 
@@ -187,7 +193,9 @@ class Player:
         """equips a new armour piece on the player's person and puts their old armour piece in their safe"""
 
         self.safe['armour'].append(self.armour[armour_piece.get_slot()])
+        # sends the armour piece to the correct safe armour slot by checking the armour piece's slot
         self.armour[armour_piece.get_slot()] = armour_piece
+        # equips the armour piece in the correct player armour slot by checking the armour piece's slot
 
     def equip_weapon(self, new_weapon):
         """equips a new weapon for the player to use and puts their old weapon in their inventory"""
@@ -208,12 +216,12 @@ class Player:
 
             print("Your inventory is full. Item has been adeed to your safe")
             self.safe[item.get_type()].append(item)
+            # if a player's inventory is full, the item is sent to the safe
 
     def remove_item_from_inventory(self, item):
         """removes an item from the inventory"""
 
         if item in self.inventory:
-
             self.safe[item.get_type()].append(item)
             self.inventory.remove(item)
 
@@ -232,10 +240,13 @@ class Player:
                 print("Which item would you like to send to your safe (enter the number)")
                 safe_choice = int_input()
 
-                if safe_choice <= len(self.inventory):
+                if 0 < safe_choice <= len(self.inventory):
+                    # checks if the selected choice is within the bounds of the inventory
 
                     self.safe[self.inventory[safe_choice - 1].get_type()].append(self.inventory[safe_choice - 1])
+                    # sends the item to the safe
                     self.inventory.pop(safe_choice - 1)
+                    # removes the item from the inventory
 
                 else:
 
@@ -245,6 +256,7 @@ class Player:
             elif inventory_choice == 'back' or inventory_choice == 'b':
 
                 break
+                # if the player chooses to back out of their safe, the loop ends
 
             else:
 
@@ -276,10 +288,14 @@ class Player:
                         print("Enter the potion number you would like to equip")
                         potion_choice = int_input()
 
-                        if potion_choice <= len(self.safe['potion']):
+                        if 0 < potion_choice <= len(self.safe['potion']):
+                            # checks if the selected potion is within the bounds of the potion list
 
                             self.add_item_to_inventory(self.safe['potion'][potion_choice - 1])
+                            # item is appended to the inventory
                             self.safe['potion'].pop(potion_choice - 1)
+                            # item is removed from safe
+                            # TODO check if this will lead to disappearing potions
 
                         else:
 
@@ -299,6 +315,7 @@ class Player:
                         else:
 
                             print("Invalid input")
+                            # prompts the user again if invalid input
 
                     elif equip_choice == 'b' or equip_choice == 'back':
 
@@ -307,10 +324,12 @@ class Player:
                     else:
 
                         print("Invalid Input")
+                        # prompts the user again if invalid input
 
             elif safe_choice == 'p' or safe_choice == 'put':
 
                 self.inventory_interface()
+                # launches the inventory interface if the player chooses to put items from inventory into the safe
 
             elif safe_choice == 'e' or safe_choice == 'exchange':
 
@@ -318,11 +337,15 @@ class Player:
                 print("Enter the weapon number you would like to equip")
                 weapon_choice = int_input()
 
-                if weapon_choice <= len(self.safe['weapon']):
+                if 0 < weapon_choice <= len(self.safe['weapon']):
+                    # checks if the weapon choice is within the bounds of the list of weapons
 
                     self.safe['weapon'].append(self.weapon)
+                    # adds player's weapon to safe
                     self.weapon = self.safe['weapon'][weapon_choice - 1]
+                    # makes player's weapon attribute equal to the weapon choice from the safe
                     self.safe['weapon'].pop(weapon_choice - 1)
+                    # removes the chosen weapon from the safe as it has been taken by the player
 
                     break
 
@@ -335,17 +358,22 @@ class Player:
                 display_elements_from_list(self.safe['armour'])
                 print("Enter the armour number you would like to equip")
                 armour_choice = int_input()
+
                 if armour_choice <= len(self.safe['armour']):
 
                     self.safe['armour'].append(self.armour[self.safe['armour'][armour_choice - 1].get_slot()])
+                    # adds the player's armour piece (of the same slot as the player's armour selection) to the safe
                     self.armour[armour_choice - 1] = self.safe['armour'][armour_choice - 1]
+                    # equips the player's armour selection into the respective armour slot
                     self.safe['armour'].pop(armour_choice - 1)
+                    # removes the player's armour selection from the safe as it has been taken out by the player
 
                     break
 
                 else:
 
                     print("Invalid input")
+                    # prompts the user again if invalid input
 
             elif safe_choice == 'b' or safe_choice == 'back':
 
@@ -358,6 +386,7 @@ class Player:
             else:
 
                 print("Invalid input")
+                # prompts the user again if invalid input
 
     def display_inventory(self):
 
@@ -372,6 +401,7 @@ class Player:
 
             print("\n" + item_group.capitalize() + ":\n")
             display_elements_from_list(self.safe[item_group])
+            # separates the item types in the safe and displays them in groups
 
     def lose_health_from_attack(self, attack_damage, hostile_name):
         """causes the player to lose health due to hostile attack as specified by parameter attack_damage"""
@@ -396,6 +426,8 @@ class Player:
 
                 print("You have gained " + str(self.default_charge - self.charge) + " charge")
                 self.charge = self.default_charge
+                # if the player's charge would be past maximum charge after charging, then it sets the charge to maximum
+                # to prevent the player getting more charge than the maximum amount of charge
 
     def add_money(self, amount):
         """causes the player to gain the amount of money specified in the parameter amount"""
@@ -476,7 +508,7 @@ class Player:
         """reforges the player's weapon for 20 coins"""
 
         if self.purchase(20):
-
+            
             self.weapon.reforge()
             print("Your weapon has been reforged, it is now " + str(self.weapon.get_condition()))
 
@@ -557,7 +589,6 @@ class Player:
                 multiplier = upgrade_progression_dictionary['health'][index]
 
                 if self.max_health / multiplier == self.default_health:
-
                     self.max_health = self.default_health * upgrade_progression_dictionary['health']
                     print("Your health has been upgraded by " +
                           str((self.default_health * upgrade_progression_dictionary['health'][index]) - self.max_health)
@@ -594,7 +625,6 @@ class Player:
                 add_amount = upgrade_progression_dictionary['charge'][index]
 
                 if self.max_charge - add_amount == self.default_charge:
-
                     self.max_charge = self.default_health + upgrade_progression_dictionary['charge']
                     print("Your charge has been upgraded by " +
                           str((self.default_charge + upgrade_progression_dictionary['charge'][index + 1])
@@ -619,7 +649,7 @@ class Player:
                 self.default_attack_amplification_amount + upgrade_progression_dictionary['attack_amplification'][0]
             # if the player's max health still has not been upgraded then multiply max health by the first multiplier
 
-        elif self.attack_amplification_amount - upgrade_progression_dictionary['attack_amplification'][-1]\
+        elif self.attack_amplification_amount - upgrade_progression_dictionary['attack_amplification'][-1] \
                 == self.default_attack_amplification_amount:
 
             print("You have already maximized your attack amplification upgrades!")
@@ -634,7 +664,6 @@ class Player:
                 add_amount = upgrade_progression_dictionary['attack_amplification'][index]
 
                 if self.attack_amplification_amount - add_amount == self.default_attack_amplification_amount:
-
                     self.max_charge = self.default_health + upgrade_progression_dictionary['attack_amplification']
                     print("Your attack amplification has been upgraded by " +
                           str((self.default_charge + upgrade_progression_dictionary['attack_amplification'][index + 1])
@@ -787,8 +816,8 @@ class Player:
             'safe': self.safe,
             'weapon': self.weapon.get_attribute_dictionary(),
             'armour': {'helmet': self.armour['helmet'].get_set(),
-                      'chestplate': self.armour['chestplate'].get_set(),
-                      'boots': self.armour['boots'].get_set()},
+                       'chestplate': self.armour['chestplate'].get_set(),
+                       'boots': self.armour['boots'].get_set()},
             'default_health': self.default_health,
             'health': self.health,
             'max_health': self.max_health,

@@ -1,9 +1,8 @@
 import random
-
+# TODO redesign difficulty multiplier
 
 # import Weapons
 # import Attacks
-# TODO consider changing close or far to actual distances in meters
 
 
 class Hostile:
@@ -21,10 +20,10 @@ class Hostile:
         self.health = self.default_health
         self.heal_amount = heal_amount
         self.max_health = self.health
-        self.damage = damage
         # hostile's health
         # hostile's heal_amount: how much a hostile heals during a battle
         # hostile's max_health: the maximum amount of health a hostile can attain
+        self.damage = damage
         self.defence = defence * self.difficulty_multiplier
         self.default_defence = self.defence
         self.base_defence = self.defence

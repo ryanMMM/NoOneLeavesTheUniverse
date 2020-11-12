@@ -22,6 +22,8 @@
 # TODO make attack amplification a player attribute
 # TODO change player tile so it calls from player class
 # TODO make display active buffs method
+# TODO setup invalid input function
+# TODO remove directed buff
 
 import time
 import random
@@ -49,8 +51,11 @@ class GameSave:
         # variable that checks if the player has played the game before
         self.difficulty_multiplier = difficulty_multiplier
         self.village_coordinates = village_coordinates
+        # location of village on map
         self.player = player
+        # stores the object of the current player
         self.hostile = hostile
+        # stores the current loaded hostile object
         self.attack_amplification = 1
         # initialize the attack amplification at 1, to be changed dynamically in combat
         # the dimensions of the map
@@ -117,9 +122,10 @@ class GameSave:
                 time.sleep(2)
 
                 self.initialize_player()
-                # prompts the user again if invalid input is given through recursion of the method
+                # prompts the user again
 
         self.set_up_difficulty_multiplier(self.difficulty_multiplier)
+        # goes through the enemies in the enemy object dictionary and applies difficulty multiplier
         self.player.change_name(name)
         # change's the player object's name to the chosen name
         self.player.change_gamesave(self)
@@ -164,6 +170,7 @@ class GameSave:
         if random_event_chance == 1:
 
             starting_health = self.player.get_health()
+            # starting health is the player's health before the battle
             print("A hostile appeared!")
             time.sleep(0.25)
             clear_screen()
@@ -173,23 +180,28 @@ class GameSave:
             if self.fight():
 
                 self.wilderness()
+                # if the fight is won by the player they can return to the wilderness
 
             else:
 
                 self.player.die(starting_health)
                 self.player.respawn()
                 self.enter_new_tile()
+                # if the player dies during the fight,
+                # then they are returned to their village with their starting health
 
     def wilderness(self):
         """starts the wilderness gameplay loop"""
 
         winsound.PlaySound("Soundtrack/village.wav", winsound.SND_ASYNC | winsound.SND_ALIAS)
+
         while True:
 
             clear_screen()
             print(self.player.display_navigation_stats())
             print("Would you like to move (N)orth, (S)outh, (E)ast, (W)est, or (R)eturn to village?")
             wilderness_choice = str_input()
+            # displays the player's location and stats and asks them with direction they would like to go
 
             if wilderness_choice == 'n' or wilderness_choice == 'north':
 
@@ -222,10 +234,14 @@ class GameSave:
 
         self.player.update_tile_list_index()
         self.player_tile = self.tile_list[self.player.get_tile_list_index()]
+        # updates the player's tile index and sets the attribute player tile to the
+        # tile object in the tile list that corresponds with the player's location
 
         if self.player_tile.get_composition()[-4:] == 'boss':
 
             self.boss_fight(self.player_tile.get_composition())
+            # checks if the composition is a type of boss by checking the last 4 characters of the composition
+            # and if so, begins the bossfight with the boss in the composition of the tile
 
         elif self.player_tile.get_composition() == 'drawbridge':
 
@@ -247,6 +263,8 @@ class GameSave:
 
             self.random_event(self.player_tile.get_biome())
             self.wilderness()
+            # if there is nothing in the tile, then a random event is run for the chance of a fight starting
+            # with a random hostile, then the player begins the wilderness gameplay loop
 
     def village(self):
         """starts the village gameplay loop"""
@@ -322,7 +340,7 @@ class GameSave:
             else:
 
                 print("Invalid statement")
-                # prompts the user again if invalid input is given through recursion of the method
+                # prompts the user again
 
     def potion_shop(self):
         """starts the potion shop game loop, allowing the player to purchase potions"""
@@ -344,13 +362,16 @@ class GameSave:
 
                     print(str(index) + ". " + str(potion).capitalize() + "\nPrice: " + str(potion.get_cost()) + "\n")
                     index += 1
+                    # loops through the potions and prints them out in a numbered list
+                    # TODO put this all in a grid from rich library
 
                 print(str(index) + ". Back out\n")
 
                 print("Which potion would you like to purchase? (Enter the number of the potion)")
                 potion_choice = int_input()
 
-                if potion_choice < index:
+                if 0 < potion_choice < index:
+                    # checks if the selection is within range of the list of potions
 
                     self.player.purchase(potion_list[potion_choice - 1].get_cost())
                     self.player.add_item_to_inventory(potion_list[potion_choice - 1])
@@ -390,13 +411,15 @@ class GameSave:
 
                     print(str(index) + ". " + str(weapon).capitalize() + "\nPrice: " + str(weapon.get_cost()) + "\n")
                     index += 1
+                    # loops through the weapons and prints them out in a numbered list
 
                 print(str(index) + ". Back out\n")
 
                 print("Which weapon would you like to purchase? (Enter the number of the weapon)")
                 weapon_choice = int_input()
 
-                if weapon_choice < index:
+                if 0 < weapon_choice < index:
+                    # checks if the selection is within range of the list of weapons
 
                     self.player.purchase(weapon_list[weapon_choice - 1].get_cost())
                     self.player.equip_weapon(weapon_list[weapon_choice - 1])
@@ -421,7 +444,9 @@ class GameSave:
 
         armour_group_key_list = [armour_group_key for armour_group_key in armour_object_dictionary]
         armour_group_list = [armour_object_dictionary[armour_group_key] for armour_group_key in armour_group_key_list]
+        # TODO check if this unorders the helment chestplate and boots
         # puts weapons into a fixed list for the entire duration of this method's call
+        # to prevent variance in the order displayed, as dictionaries are unordered
         armour_order_list = ['helmet', 'chestplate', 'boots']
         # specifies the types of armour and their order
 
@@ -437,23 +462,32 @@ class GameSave:
                 for armour_group in armour_group_list:
 
                     print("\n" + armour_group[random.choice(armour_order_list)].get_set().upper() + "\n")
-                    # finds the set of the armour and displays it
+                    # loops through and prints the sets of armour
 
                     for armour_piece in armour_group:
+
                         print(str(index) + ". " + armour_order_list[index % len(armour_order_list)].capitalize() + ": "
                               + str(armour_group[armour_piece]) + "\nCost: " + str(
                             armour_group[armour_piece].get_cost()))
+                        # loops through and prints all the armor pieces within each set of armour
+
                         index += 1
 
                 print(str(index) + ". Back out")
+
                 print("Which armour piece would you like to purchase? (Enter the number of the armour piece)")
                 armour_choice = str_input()
 
                 if armour_choice < index:
+                    # checks if the selection is within range of the list of weapons
 
                     self.player.equip_armour(armour_group_list
                                              [armour_choice // len(armour_order_list)][armour_order_list]
                                              [armour_choice % len(armour_order_list)])
+                    # uses floored division dividing the armour choice by the amount of pieces of armor per set
+                    # to find the index of the armour set in the first set of squared brackets
+                    # then uses modulus to find the index of the armour piece within the set of armour in the second
+                    # squared brackets
 
                 elif armour_choice == index:
 
@@ -514,23 +548,28 @@ class GameSave:
             if marketplace_choice == 's' or marketplace_choice == 'sell':
 
                 if len(self.player.get_collectibles()):
+                    # checks if the player has collectibles to sell
 
                     collectible_names_and_values = [str(collectible).capitalize() + " \nValue: "
                                                     + collectible.get_value() + "\n"
                                                     for collectible in self.player.get_collectibles()]
                     print("YOUR COLLECTIBLES:\n")
                     display_elements_from_list(collectible_names_and_values)
+                    # displays the player's collectibles and their respective values
                     print(str(len(self.player.get_collectibles()) + 1) + ". Back out")
                     print("\nEnter the item number you would like to sell")
                     sell_choice = int_input()
 
-                    if sell_choice < len(self.player.get_collectibles() - 1):
+                    if 0 < sell_choice <= len(self.player.get_collectibles()):
+                        # checks if the selection is within range of the list of collectibles
 
                         print("You sold " + self.player.get_collectible_names()[sell_choice] + " for "
                               + str(self.player.get_collectibles()[sell_choice].get_value()) + "coins")
                         self.player.add_money(self.player.get_collectibles()[sell_choice].get_value())
+                        # gives the player the amount of money they're owed for selling the collectible
+                        # TODO remove collectible
 
-                    elif sell_choice == len(self.player.get_collectibles() - 1):
+                    elif sell_choice == len(self.player.get_collectibles()):
 
                         pass
                         # if the player backs out, they are return to the first prompt
@@ -542,6 +581,7 @@ class GameSave:
                 else:
 
                     print("You have no collectibles to sell! Get out and come back when you have something for me!")
+
                     break
 
             elif marketplace_choice == 'l' or marketplace_choice == 'leave':
@@ -607,12 +647,16 @@ class GameSave:
 
             print("You Win!")
             self.spare_or_kill()
+            # if the hostile is dead when the battle ends, then the player wins, and they can choose to spare or kill
+            # an enemy
 
             return True
+            # returns true if the player wins the battle
 
         else:
 
             return False
+            # returns false if the player loses the battle
 
     def boss_fight(self, boss):
         """initiates a boss fight"""
@@ -625,7 +669,9 @@ class GameSave:
             if boss_fight_choice == 'f' or boss_fight_choice == 'fight':
 
                 starting_health = self.player.get_health()
+                # saves the player's starting health before the fight
                 self.hostile = boss_object_dictionary[boss]
+                # loads the boss object into the game save's hostile attribute
 
                 if self.fight():
 
@@ -635,6 +681,7 @@ class GameSave:
                     self.player_tile = self.tile_list[self.player.get_tile_list_index()]
                     # removes the boss from the dictionary as it has been defeated
                     self.wilderness()
+                    # if the player wins the battle, they return to the wilderness
 
                     break
 
@@ -643,12 +690,14 @@ class GameSave:
                     self.player.die(starting_health)
                     self.player.respawn()
                     self.enter_new_tile()
+                    # if the player loses the battle and dies, they spawn back at the village at their starting health
 
                     break
 
             elif boss_fight_choice == 'l' or boss_fight_choice == 'leave':
 
-                self.enter_new_tile()
+                self.wilderness()
+                # sends the player back to the wilderness
 
             else:
 
@@ -697,21 +746,27 @@ class GameSave:
 
             attack_choice = int_input()
 
-            if attack_choice < index:
+            if 0 < attack_choice < index:
+                # checks if the selection is within range of the list of attacks
 
-                # checks if the user has chosen a valid attack that is in range of the attack numbers
-                # if so, the attack is executed and the hostile loses and appropriate amount of health
                 chosen_attack = self.player.weapon.get_attacks()[attack_choice - 1]
+                # loads the attack object corresponding to the player's selection
                 base_damage = self.player.weapon.get_damage()
+                # loads the base damage in the player's weapon
                 attack_multiplier = chosen_attack.get_multiplier()
+                # loads the attack multiplier corresponding to the player's selection
                 damage = base_damage * attack_multiplier * self.attack_amplification
+                # calculates the damage dealt to the enemy by multiplying the variables
 
                 if str(chosen_attack.get_buff()):
 
                     self.hostile.add_buff(DirectedBuff(chosen_attack.buff))
+                    # if the attack has a buff in it, that buff is applied to the enemy
 
                 self.hostile.lose_health_from_attack(damage, str(self.player))
+                # removes the damage dealt from the hostile's attack
                 self.attack_amplification = 1
+                # once an attack has been carried out, the attack amplification is reset to 1
 
                 break
 
@@ -765,6 +820,7 @@ class GameSave:
             clear_screen()
             index = 1
             potions = self.player.get_potions()
+            # stores a list of potions, pulled from the player's inventory
 
             for potion in potions:
 
@@ -772,12 +828,16 @@ class GameSave:
                 index += 1
 
             print(str(index) + ". Back out")
+
             potion_choice = int_input()
             potion = potions[potion_choice]
 
-            if potion_choice < index:
+            if 0 < potion_choice < index:
+                # checks if the selection is within range of the list of potions
 
                 self.player.remove_item_from_inventory(potion)
+                # once the player uses the potion, it is removed from their inventory
+                # TODO apply buff
 
             elif potion_choice == index:
 
