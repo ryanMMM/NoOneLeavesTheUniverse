@@ -3,7 +3,6 @@ import json
 
 from attacks import Attack
 from constant_attributes import condition_dictionary
-# TODO attacks functionality
 
 
 class Weapon:

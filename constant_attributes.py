@@ -1,4 +1,12 @@
 weapon_attribute_dictionary = {
+    "starter_weapon":
+        {
+            "name": "Wooden Stick",
+            "description": "just a wooden stick",
+            "default damage": 25,
+            "weapon_type": "starter",
+            "cost": 0
+        },
     "stapler_rifle":
         {
             "name": "Staple Rifle",
@@ -42,6 +50,21 @@ weapon_attribute_dictionary = {
 }
 
 attack_attribute_dictionary = {
+    "starter_weapon":
+        [
+            {
+                "name": "Poke",
+                "multiplier": 1.2,
+                "variance": 0.4,
+                "buff": ""
+            },
+            {
+                "name": "Poison Ivy",
+                "multiplier": 0.8,
+                "variance": 0.2,
+                "buff": "poison_1"
+            }
+        ],
     "stapler_rifle":
         [
             {
@@ -710,22 +733,26 @@ shop_dialogue = {
         {
             "high_reputation":
                 [
-
+                    "Please come again if you ever need anything!",
+                    "Thanks for dropping by!"
                 ],
             "low_reputation":
                 [
-
+                    "Please don't come back",
+                    "Go forge your weapons somewhere else next time"
                 ]
         },
     "potion_shop":
         {
             "high_reputation":
                 [
-
+                    "We've got the best potions in the UNIVERSE, tell your friends!",
+                    "Please come back soon, I love your coins"
                 ],
             "low_reputation":
                 [
-
+                    "You stink up the place, please wear some perfume upon your next visit",
+                    "If it wasn't for your money, I'd tell you to leave"
                 ]
         }
 }

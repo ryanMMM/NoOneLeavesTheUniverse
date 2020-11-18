@@ -5,25 +5,24 @@
 # TODO add hostile progression and weapon progression
 # TODO add npcs in taverns who ask for items
 # TODO if someone runs from a fight, they can no longer explore the wilderness for that day
-# TODO add formatting function as a list that prints each text after a certain amount of time
-# TODO use regex for fights to allow experienced players to attack quickly, and display list for new players
 # TODO make weighted decision tree for enemies
-# TODO implement multiple steps, i.e. north 3
-# TODO show map display
-# TODO implement help to show objectives, bosses, etc.
-# TODO use conditions for while loops
 # TODO make it so that new players have a new map generated
-# TODO run through code, space things out, and comment as much as you can
-# TODO implement boss dialogue and shop dialogue, for entering and leaving the shop
 # TODO make dictionary of soundtrack file paths
-# TODO use isnum() for output formatting instead
-# TODO set -1 exception for if statements
-# TODO display monetary stats and prices in upgrade center
-# TODO make attack amplification a player attribute
 # TODO change player tile so it calls from player class
 # TODO make display active buffs method
 # TODO setup invalid input function
+
+# TODO add formatting function as a list that prints each text after a certain amount of time
+# TODO use regex for fights to allow experienced players to attack quickly, and display list for new players
+# TODO implement multiple steps, i.e. north 3
+# TODO show map display
+# TODO implement help to show objectives, bosses, etc.
+# TODO implement boss dialogue and shop dialogue, for entering and leaving the shop
+# TODO use isnum() for output formatting instead
+# TODO set -1 exception for if statements
+# TODO display monetary stats and prices in upgrade center
 # TODO remove directed buff
+# TODO make attack amplification a player attribute
 
 import time
 import random
@@ -37,7 +36,7 @@ from hostile import Hostile
 from buff import *
 from map_tiles import Tile
 from constant_objects import *
-from constant_attributes import upgrade_cost_dictionary
+from constant_attributes import upgrade_cost_dictionary, shop_dialogue
 from output_formatting import *
 
 
@@ -334,7 +333,16 @@ class GameSave:
 
             elif forgery_choice == 'l' or forgery_choice == 'leave':
 
-                print("Thanks for coming by!")
+                if self.player.is_reputation_high():
+                    # prints exit dialogue for high reputation if the player has high reputation
+
+                    print(random.choice(shop_dialogue['forgery']['high_reputation']))
+
+                else:
+                    # prints exit dialogue for low reputation if player does not have high reputation
+
+                    print(random.choice(shop_dialogue['forgery']['low_reputation']))
+
                 break
 
             else:
@@ -360,7 +368,8 @@ class GameSave:
 
                 for potion in potion_list:
 
-                    print(str(index) + ". " + str(potion).capitalize() + "\nPrice: " + str(potion.get_cost()) + "\n")
+                    print(str(index) + ". " + str(potion).capitalize()
+                          + "\nPrice: " + str(potion.get_cost() * self.player.get_price_multiplier()) + "\n")
                     index += 1
                     # loops through the potions and prints them out in a numbered list
                     # TODO put this all in a grid from rich library
@@ -388,7 +397,16 @@ class GameSave:
 
             elif potion_shop_choice == 'l' or potion_shop_choice == 'leave':
 
-                print("Thank you for coming by!")
+                if self.player.is_reputation_high():
+                    # prints exit dialogue for high reputation if the player has high reputation
+
+                    print(random.choice(shop_dialogue['potion_shop']['high_reputation']))
+
+                else:
+                    # prints exit dialogue for low reputation if player does not have high reputation
+
+                    print(random.choice(shop_dialogue['potion_shop']['low_reputation']))
+
                 break
 
     def weapon_dealer(self):
@@ -409,7 +427,8 @@ class GameSave:
 
                 for weapon in weapon_list:
 
-                    print(str(index) + ". " + str(weapon).capitalize() + "\nPrice: " + str(weapon.get_cost()) + "\n")
+                    print(str(index) + ". " + str(weapon).capitalize()
+                          + "\nPrice: " + str(weapon.get_cost() * self.player.get_price_multiplier()) + "\n")
                     index += 1
                     # loops through the weapons and prints them out in a numbered list
 
@@ -467,8 +486,8 @@ class GameSave:
                     for armour_piece in armour_group:
 
                         print(str(index) + ". " + armour_order_list[index % len(armour_order_list)].capitalize() + ": "
-                              + str(armour_group[armour_piece]) + "\nCost: " + str(
-                            armour_group[armour_piece].get_cost()))
+                              + str(armour_group[armour_piece]) + "\nCost: "
+                              + str(armour_group[armour_piece].get_cost()) * self.player.get_price_multiplier())
                         # loops through and prints all the armor pieces within each set of armour
 
                         index += 1

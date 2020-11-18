@@ -716,6 +716,21 @@ class Player:
 
         self.health = health
 
+    def change_weapon(self, weapon):
+
+        self.weapon = weapon
+
+    def is_reputation_high(self):
+        """returns true if reputation is above or equal to 50%, and returns false if reputation is below 50%"""
+
+        if self.reputation >= 50:
+
+            return True
+
+        else:
+
+            return False
+
     def calculate_defence(self):
         """calculates the defence by summing up the defence points in each armour set"""
 
@@ -905,9 +920,18 @@ class Player:
 
         return self.charge_add_amount
 
+    def get_price_multiplier(self):
+        """returns how much the price is multiplied by, which is dependant on reputation"""
+
+        return (150 - self.reputation) / 100
+        # the higher the reputation, the smaller the multiplier, thus the prices are cheaper
+
     def is_alive(self):
 
         if self.health > 0:
+
             return True
+
         else:
+
             return False
