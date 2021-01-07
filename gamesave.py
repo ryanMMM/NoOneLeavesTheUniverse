@@ -20,7 +20,6 @@
 # TODO implement boss dialogue and shop dialogue, for entering and leaving the shop
 # TODO use isnum() for output formatting instead
 # TODO set -1 exception for if statements
-# TODO display monetary stats and prices in upgrade center
 # TODO remove directed buff
 # TODO make attack amplification a player attribute
 
@@ -33,10 +32,10 @@ import winsound
 
 from player import Player
 from hostile import Hostile
-from buff import *
+from buff import Buff
 from map_tiles import Tile
 from constant_objects import *
-from constant_attributes import upgrade_cost_dictionary, shop_dialogue
+from constant_attributes import shop_dialogue
 from output_formatting import *
 
 
@@ -44,7 +43,7 @@ class GameSave:
     """GameSave objects represent every new game a player creates"""
 
     def __init__(self, played_before=False, difficulty_multiplier=1, village_coordinates=[8, 7],
-                 player=Player(), hostile=Hostile()):
+                 player=Player()):
 
         self.played_before = played_before
         # variable that checks if the player has played the game before
@@ -53,7 +52,7 @@ class GameSave:
         # location of village on map
         self.player = player
         # stores the object of the current player
-        self.hostile = hostile
+        self.hostile = Hostile()
         # stores the current loaded hostile object
         self.attack_amplification = 1
         # initialize the attack amplification at 1, to be changed dynamically in combat
@@ -123,6 +122,8 @@ class GameSave:
                 self.initialize_player()
                 # prompts the user again
 
+        self.player.change_weapon(weapon_object_dictionary['starter_weapon'])
+        # gives the player the starter weapon at the beginning of the game
         self.set_up_difficulty_multiplier(self.difficulty_multiplier)
         # goes through the enemies in the enemy object dictionary and applies difficulty multiplier
         self.player.change_name(name)
@@ -170,6 +171,8 @@ class GameSave:
 
             starting_health = self.player.get_health()
             # starting health is the player's health before the battle
+            starting_inventory = self.player.get_inventory()
+            # starting inventory is the player's inventory before the battle
             print("A hostile appeared!")
             time.sleep(0.25)
             clear_screen()
@@ -178,16 +181,21 @@ class GameSave:
 
             if self.fight():
 
+                for buff in self.player.active_buffs:
+                    self.player.remove_buff(buff)
+
+                # removes all the active buffs the player recieved during the fight
+
                 self.wilderness()
                 # if the fight is won by the player they can return to the wilderness
 
             else:
 
-                self.player.die(starting_health)
+                self.player.die(starting_health, starting_inventory)
                 self.player.respawn()
                 self.enter_new_tile()
                 # if the player dies during the fight,
-                # then they are returned to their village with their starting health
+                # then they are returned to their village with their starting health and inventory restored
 
     def wilderness(self):
         """starts the wilderness gameplay loop"""
@@ -358,6 +366,7 @@ class GameSave:
 
         while True:
 
+            self.player.display_monetary_stats()
             print("Welcome to the potion shop! Would you like to (B)uy potions or (L)eave")
             potion_shop_choice = str_input()
 
@@ -417,7 +426,8 @@ class GameSave:
 
         while True:
 
-            print("Good morning sir! I am the weapon dealer! Would you like to (B)uy weapons or (L)eave")
+            self.player.display_monetary_stats()
+            print("I am Paul the weapon dealer! Would you like to (B)uy weapons or (L)eave")
             weapon_dealer_choice = str_input()
 
             if weapon_dealer_choice == 'b' or weapon_dealer_choice == 'buy':
@@ -471,6 +481,7 @@ class GameSave:
 
         while True:
 
+            self.player.display_monetary_stats()
             print("Welcome to the armour shop, would you like to (B)uy armour or (L)eave")
             armour_shop_choice = str_input()
 
@@ -531,6 +542,7 @@ class GameSave:
 
         while True:
 
+            self.player.display_monetary_stats()
             print("Welcome to the upgrade center, would you like to upgrade "
                   "(H)ealth, (C)harge, or (A)ttack Amplification, or would you like to (L)eave?")
             upgrade_choice = str_input()
@@ -561,6 +573,7 @@ class GameSave:
 
         while True:
 
+            self.player.display_monetary_stats()
             print("Welcome to the market! Would you like to (S)ell your collectibles or (L)eave?")
             marketplace_choice = str_input()
 
@@ -779,7 +792,7 @@ class GameSave:
 
                 if str(chosen_attack.get_buff()):
 
-                    self.hostile.add_buff(DirectedBuff(chosen_attack.buff))
+                    self.hostile.add_buff(Buff(chosen_attack.buff))
                     # if the attack has a buff in it, that buff is applied to the enemy
 
                 self.hostile.lose_health_from_attack(damage, str(self.player))

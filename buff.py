@@ -30,20 +30,7 @@ class Buff:
 
         return self.duration
 
-
-class DirectedBuff:
-
-    def __init__(self, buff=Buff()):
-
-        self.buff = buff
-        self.duration_counter = self.buff.get_duration() + 1
-
     def apply_buff(self):
-        """every round in a fight the duration of a buff is checked by this method, when it reaches 0, the buff stops"""
+        """decrements the duration by 1 after the buff has been applied for one round"""
 
-        self.duration_counter -= 1
-
-        return self.duration_counter
-
-
-
+        self.duration -= 1

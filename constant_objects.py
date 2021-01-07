@@ -6,9 +6,9 @@ from hostile import Hostile
 from item import Potion, Collectible
 from constant_attributes import *
 
-"""
-functions MUST be called in the order that they are written in this file
-"""
+
+# functions MUST be called in the order that they are written in this file
+# because some functions use the output of other functions
 
 
 def unpack_armour_into_objects():
@@ -24,17 +24,17 @@ def unpack_armour_into_objects():
         boots_attributes = armour_attribute_dictionary[armour_key]['boots']
 
         armour_output_dictionary[armour_key]['helmet'] = Helmet(helmet_attributes['name'],
-                                                              helmet_attributes['defense'],
-                                                              helmet_attributes['armour_set'],
-                                                              helmet_attributes['cost'])
+                                                                helmet_attributes['defense'],
+                                                                helmet_attributes['armour_set'],
+                                                                helmet_attributes['cost'])
         armour_output_dictionary[armour_key]['chestplate'] = Chestplate(chestplate_attributes['name'],
-                                                                      chestplate_attributes['defense'],
-                                                                      chestplate_attributes['armour_set'],
-                                                                      chestplate_attributes['cost'])
+                                                                        chestplate_attributes['defense'],
+                                                                        chestplate_attributes['armour_set'],
+                                                                        chestplate_attributes['cost'])
         armour_output_dictionary[armour_key]['boots'] = Boots(boots_attributes['name'],
-                                                            boots_attributes['defense'],
-                                                            boots_attributes['armour_set'],
-                                                            boots_attributes['cost'])
+                                                              boots_attributes['defense'],
+                                                              boots_attributes['armour_set'],
+                                                              boots_attributes['cost'])
 
     return armour_output_dictionary
 
@@ -153,7 +153,6 @@ def unpack_hostiles_into_objects():
         hostile_list = []
 
         for hostile_attributes in hostile_attribute_dictionary[hostile_group_key]:
-
             hostile_list.append(Hostile(hostile_attributes['name'],
                                         hostile_attributes['species'],
                                         hostile_attributes['health'],

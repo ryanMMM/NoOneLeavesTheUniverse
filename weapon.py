@@ -1,5 +1,4 @@
 import random
-import json
 
 from attacks import Attack
 from constant_attributes import condition_dictionary

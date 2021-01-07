@@ -9,7 +9,7 @@ from armour import *
 from weapon import Weapon
 
 from calculations import *
-from constant_attributes import upgrade_progression_dictionary
+from constant_attributes import upgrade_progression_dictionary, upgrade_cost_dictionary
 from output_formatting import *
 
 
@@ -398,7 +398,6 @@ class Player:
         print("SAFE:")
 
         for item_group in self.safe:
-
             print("\n" + item_group.capitalize() + ":\n")
             display_elements_from_list(self.safe[item_group])
             # separates the item types in the safe and displays them in groups
@@ -443,7 +442,10 @@ class Player:
 
         for buff in self.active_buffs:
 
+            buff.apply_buff()
+
             if buff.get_duration():
+                # every round in a fight the duration of a buff is checked by this method
 
                 if buff.get_effect() == 'block_healing':
 
@@ -478,6 +480,8 @@ class Player:
 
                 self.remove_buff(buff)
 
+                # when the duration of a buff reaches 0, the buff is removed
+
     def affordable(self, price):
         """checks if player can afford an item by comparing the parameter price to the player's coin balance"""
 
@@ -508,7 +512,6 @@ class Player:
         """reforges the player's weapon for 20 coins"""
 
         if self.purchase(20):
-            
             self.weapon.reforge()
             print("Your weapon has been reforged, it is now " + str(self.weapon.get_condition()))
 
@@ -518,7 +521,6 @@ class Player:
         if not self.inventory_full():
 
             if self.purchase(price):
-
                 self.inventory.append(item)
                 print(item + " has been added to your inventory")
 
@@ -540,11 +542,12 @@ class Player:
         print("You have gained 5% more intimidation")
         print("You have lost 5% of your reputation")
 
-    def die(self, starting_health):
+    def die(self, starting_health, starting_inventory):
         """initiates dying sequence and respawns the player with the amount of health they had before the fight"""
 
         print("You Died.")
         self.set_health(starting_health)
+        self.set_inventory(starting_inventory)
 
     def respawn(self):
         """respawns the player after a death"""
@@ -569,11 +572,13 @@ class Player:
 
         if self.max_health == self.default_health:
 
-            print("Your health has been upgraded by " +
-                  str((self.default_health * upgrade_progression_dictionary['health'][0]) - self.max_health)
-                  + " points")
-            self.max_health *= upgrade_progression_dictionary['health'][0]
-            # if the player's max health still has not been upgraded then multiply max health by the first multiplier
+            if self.affordable(upgrade_cost_dictionary['health']):
+                print("Your health has been upgraded by " +
+                      str((self.default_health * upgrade_progression_dictionary['health'][0]) - self.max_health)
+                      + " points")
+                self.max_health *= upgrade_progression_dictionary['health'][0]
+                # if the player's max health still has not been upgraded
+                # then multiply max health by the first multiplier
 
         elif self.max_health / upgrade_progression_dictionary['health'][-1] == self.default_health:
 
@@ -589,12 +594,15 @@ class Player:
                 multiplier = upgrade_progression_dictionary['health'][index]
 
                 if self.max_health / multiplier == self.default_health:
-                    self.max_health = self.default_health * upgrade_progression_dictionary['health']
-                    print("Your health has been upgraded by " +
-                          str((self.default_health * upgrade_progression_dictionary['health'][index]) - self.max_health)
-                          + " points")
+                    # loops through all the multipliers in the list of multipliers and checks which one is applied
 
-                    break
+                    if self.affordable(upgrade_cost_dictionary['health']):
+                        self.max_health = self.default_health * upgrade_progression_dictionary['health']
+                        print("Your health has been upgraded by " +
+                              str((self.default_health * upgrade_progression_dictionary['health'][index])
+                                  - self.max_health) + " points")
+
+                        break
 
                 index += 1
 
@@ -606,10 +614,12 @@ class Player:
 
         if self.max_charge == self.default_charge:
 
-            print("Your charge has been upgraded by " +
-                  str(upgrade_progression_dictionary['charge'][0]) + " points")
-            self.max_charge += upgrade_progression_dictionary['charge'][0]
-            # if the player's max health still has not been upgraded then multiply max health by the first multiplier
+            if self.affordable(upgrade_cost_dictionary['charge']):
+                print("Your charge has been upgraded by " +
+                      str(upgrade_progression_dictionary['charge'][0]) + " points")
+                self.max_charge += upgrade_progression_dictionary['charge'][0]
+                # if the player's max health still has not been upgraded
+                # then multiply max health by the first multiplier
 
         elif self.max_charge - upgrade_progression_dictionary['charge'][-1] == self.default_charge:
 
@@ -625,12 +635,15 @@ class Player:
                 add_amount = upgrade_progression_dictionary['charge'][index]
 
                 if self.max_charge - add_amount == self.default_charge:
-                    self.max_charge = self.default_health + upgrade_progression_dictionary['charge']
-                    print("Your charge has been upgraded by " +
-                          str((self.default_charge + upgrade_progression_dictionary['charge'][index + 1])
-                              - self.max_charge) + " points")
+                    # loops through all the addition amounts in the list and checks which one is applied
 
-                    break
+                    if self.affordable(upgrade_cost_dictionary['charge']):
+                        self.max_charge = self.default_health + upgrade_progression_dictionary['charge']
+                        print("Your charge has been upgraded by " +
+                              str((self.default_charge + upgrade_progression_dictionary['charge'][index + 1])
+                                  - self.max_charge) + " points")
+
+                        break
 
                 index += 1
 
@@ -643,11 +656,13 @@ class Player:
 
         if self.attack_amplification_amount == self.default_attack_amplification_amount:
 
-            print("Your attack amplification has been upgraded by " +
-                  str(upgrade_progression_dictionary['attack_amplification'][0]) + " points")
-            self.attack_amplification_amount = \
-                self.default_attack_amplification_amount + upgrade_progression_dictionary['attack_amplification'][0]
-            # if the player's max health still has not been upgraded then multiply max health by the first multiplier
+            if self.affordable(upgrade_cost_dictionary['attack_amplification']):
+                print("Your attack amplification has been upgraded by " +
+                      str(upgrade_progression_dictionary['attack_amplification'][0]) + " points")
+                self.attack_amplification_amount = \
+                    self.default_attack_amplification_amount + upgrade_progression_dictionary['attack_amplification'][0]
+                # if the player's max health still has not been upgraded
+                # then multiply max health by the first multiplier
 
         elif self.attack_amplification_amount - upgrade_progression_dictionary['attack_amplification'][-1] \
                 == self.default_attack_amplification_amount:
@@ -664,10 +679,13 @@ class Player:
                 add_amount = upgrade_progression_dictionary['attack_amplification'][index]
 
                 if self.attack_amplification_amount - add_amount == self.default_attack_amplification_amount:
-                    self.max_charge = self.default_health + upgrade_progression_dictionary['attack_amplification']
-                    print("Your attack amplification has been upgraded by " +
-                          str((self.default_charge + upgrade_progression_dictionary['attack_amplification'][index + 1])
-                              - self.attack_amplification_amount) + " points")
+
+                    if self.affordable(upgrade_cost_dictionary['attack_amplification']):
+
+                        self.max_charge = self.default_health + upgrade_progression_dictionary['attack_amplification']
+                        print("Your attack amplification has been upgraded by " +
+                              str((self.default_charge + upgrade_progression_dictionary['attack_amplification']
+                                   [index + 1]) - self.attack_amplification_amount) + " points")
 
                     break
 
@@ -715,6 +733,11 @@ class Player:
         """sets health to the value within the parameter"""
 
         self.health = health
+
+    def set_inventory(self, inventory):
+        """sets inventory to the value within the parameter"""
+
+        self.inventory = inventory
 
     def change_weapon(self, weapon):
 
