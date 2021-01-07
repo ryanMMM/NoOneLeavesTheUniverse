@@ -62,7 +62,7 @@
     "y": 1,
     "biome": "lava_lake",
     "walls": [],
-    "composition": "landmark",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -131,7 +131,7 @@
     "y": 1,
     "biome": "sycamore_forest",
     "walls": [],
-    "composition": "chest_1",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -304,7 +304,7 @@
         4
       ]
     ],
-    "composition": "landmark",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -392,7 +392,7 @@
     "y": 3,
     "biome": "sycamore_forest",
     "walls": [],
-    "composition": "river",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -544,8 +544,8 @@
         5
       ]
     ],
-    "composition": "drawbridge",
-    "item_key": "chain"
+    "composition": "",
+    "item_key": ""
   },
   {
     "x": 15,
@@ -696,7 +696,7 @@
     "y": 6,
     "biome": "offices",
     "walls": [],
-    "composition": "landmark",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -736,7 +736,7 @@
     "y": 6,
     "biome": "grass_lands",
     "walls": [],
-    "composition": "stonehenge",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -776,7 +776,7 @@
     "y": 6,
     "biome": "sycamore_forest",
     "walls": [],
-    "composition": "landmark",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -1002,7 +1002,7 @@
       ]
     ],
     "composition": "grave_boss",
-    "item_key": "graveyard_key"
+    "item_key": ""
   },
   {
     "x": 10,
@@ -1185,7 +1185,7 @@
     "y": 10,
     "biome": "tundra",
     "walls": [],
-    "composition": "landmark",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -1193,7 +1193,7 @@
     "y": 10,
     "biome": "tundra",
     "walls": [],
-    "composition": "key",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -1337,7 +1337,7 @@
     "y": 11,
     "biome": "tundra",
     "walls": [],
-    "composition": "landmark",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -1489,7 +1489,7 @@
     "y": 12,
     "biome": "tundra",
     "walls": [],
-    "composition": "landmark",
+    "composition": "",
     "item_key": ""
   },
   {
@@ -1633,7 +1633,7 @@
     "y": 13,
     "biome": "goblin_forest",
     "walls": [],
-    "composition": "chest_2",
+    "composition": "",
     "item_key": ""
   },
   {
