@@ -132,36 +132,21 @@ tile_walls = {
 }
 # MUST INCLUDE THE STRING 'boss' AT THE END OFTILE COMPOSITIONS WITH BOSSES IN THEM
 tile_compositions = {
-    '[7, 1]': 'landmark',
     '[11, 1]': 'river',
-    '[15, 1]': 'chest_1',
     '[15, 2]': 'leah_boss',
     '[1, 2]': 'janice_boss',
     '[12, 2]': 'river',
-    '[2, 3]': 'landmark',
-    '[13, 3]': 'river',
-    '[14, 4]': 'drawbridge',
     '[15, 5]': 'river',
-    '[3, 6]': 'landmark',
-    '[8, 6]': 'stonehenge',
-    '[13, 6]': 'landmark',
     '[8, 7]': 'village',
     '[9, 8]': 'grave_boss',
-    '[2, 10]': 'landmark',
-    '[3, 10]': 'key',
     '[15, 10]': 'mountain',
-    '[6, 11]': 'landmark',
     '[14, 11]': 'entrance',
     '[3, 12]': 'giant_boss',
-    '[10, 12]': 'landmark',
     '[13, 12]': 'mountain',
     '[12, 13]': 'mountain',
-    '[13, 13]': 'chest_2',
     '[14, 13]': 'barry_goblin_boss'
 }
 tile_item_keys = {
-    '[9, 8]': 'graveyard_key',
-    '[14, 4]': 'chain'
 }
 
 tiles_list = set_up_tiles(x_size, y_size, biome_limits, tile_walls, tile_compositions, tile_item_keys)

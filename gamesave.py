@@ -250,14 +250,6 @@ class GameSave:
             # checks if the composition is a type of boss by checking the last 4 characters of the composition
             # and if so, begins the bossfight with the boss in the composition of the tile
 
-        elif self.player_tile.get_composition() == 'drawbridge':
-
-            pass
-
-        elif self.player_tile.get_composition() == 'landmarks':
-
-            pass
-
         elif self.player_tile.get_composition() == 'chest':
 
             pass
@@ -322,6 +314,9 @@ class GameSave:
 
                 print("Invalid input")
                 # prompts the user again if invalid input
+
+    def chest(self):
+        """"""
 
     def forgery(self):
         """starts the forgery gameplay loop, giving the player the option to reforge their weapon or leave"""
