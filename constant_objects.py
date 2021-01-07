@@ -153,6 +153,7 @@ def unpack_hostiles_into_objects():
         hostile_list = []
 
         for hostile_attributes in hostile_attribute_dictionary[hostile_group_key]:
+
             hostile_list.append(Hostile(hostile_attributes['name'],
                                         hostile_attributes['species'],
                                         hostile_attributes['health'],
