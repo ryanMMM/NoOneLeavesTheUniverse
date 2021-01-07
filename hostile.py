@@ -15,7 +15,6 @@ class Hostile:
         # hostile's species
         self.name = name
         # hostile's name
-        self.difficulty_multiplier = difficulty_multiplier
         self.default_health = health
         self.health = self.default_health
         self.heal_amount = heal_amount
@@ -121,9 +120,8 @@ class Hostile:
         """changes the difficulty multiplier and impacts the relevant hostile attributes in accordance with the
         new difficulty multiplier"""
 
-        self.difficulty_multiplier = difficulty_multiplier
-        self.health = self.default_health * self.difficulty_multiplier
-        self.coins = self.default_coins * self.difficulty_multiplier
+        self.health = self.default_health * difficulty_multiplier
+        self.coins = self.default_coins * difficulty_multiplier
 
     def add_buff(self, buff):
 

@@ -649,6 +649,8 @@ class GameSave:
     def fight(self):
         """starts a fight gameplay loop between the current hostile and player"""
 
+        self.hostile.change_difficulty_multiplier(self.difficulty_multiplier)
+        # ensures that the hostile has the correct attributes according to the difficulty multiplier
         clear_screen()
         winsound.PlaySound("Soundtrack/fight.wav", winsound.SND_ASYNC | winsound.SND_ALIAS)
         # plays fight music
