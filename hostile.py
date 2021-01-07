@@ -23,7 +23,7 @@ class Hostile:
         # hostile's heal_amount: how much a hostile heals during a battle
         # hostile's max_health: the maximum amount of health a hostile can attain
         self.damage = damage
-        self.defence = defence * self.difficulty_multiplier
+        self.defence = defence
         self.default_defence = self.defence
         self.base_defence = self.defence
         # self.weapon = Weapons.Weapon('Scythe', 10)
