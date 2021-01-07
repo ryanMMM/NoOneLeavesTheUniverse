@@ -18,7 +18,7 @@ class Player:
     def __init__(self, name='', coordinates=[0, 0], inventory_space=3, inventory=[],
                  safe={'weapon': [], 'armour': [], 'potion': [], 'collectible': []},
                  weapon=Weapon(), armour={'helmet': Helmet(), 'chestplate': Chestplate(), 'boots': Boots()},
-                 default_health=100, health=100, max_health=100, default_heal_amount=20, heal_amount=20, reputation=50,
+                 default_health=300, health=300, max_health=100, default_heal_amount=20, heal_amount=20, reputation=50,
                  intimidation=50, coins=100, default_charge=3, charge=3, max_charge=3, charge_add_amount=1,
                  default_attack_amplification_amount=1, attack_amplification_amount=1, gamesave=None):
 
