@@ -459,10 +459,14 @@ class Player:
 
                 elif buff.get_effect() == 'regeneration':
 
+                    regeneration_amount = self.default_heal_amount * buff.get_effectiveness()
+                    print("You have regenerated " + str(regeneration_amount) + " health"
                     self.add_health(self.default_heal_amount * buff.get_effectiveness())
 
                 elif buff.get_effect() == 'poison':
 
+                    poison_amount = (self.heal_amount / 2) * buff.get_effectiveness()
+                    print("You have lost " + str(poison_amount) + " from poison")
                     self.lose_health((self.heal_amount / 2) * buff.get_effectiveness())
 
                 buff.apply_buff()

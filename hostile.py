@@ -80,29 +80,34 @@ class Hostile:
         and removes buffs that have finished their duration"""
 
         for buff in self.active_buffs:
+
             if buff.get_duration():
+
                 if buff.get_effect() == 'block_defence':
+
                     print(self.name + "'s defence has been removed'")
                     self.defence = 0
+
                 elif buff.get_effect() == 'regeneration':
-                    self.add_health((self.heal_amount / 2) * buff.get_effectiveness())
+
+                    regeneration_amount = (self.heal_amount / 2) * buff.get_effectiveness()
+                    print(self.name + "has regenerated " + str(regeneration_amount) + " health from poison")
+                    self.add_health(regeneration_amount)
+
                 elif buff.get_effect() == 'poison':
+
+                    poison_amount = self.heal_amount * buff.get_effectiveness()
+                    print(self.name + "has lost " + str(poison_amount) + " health from poison")
                     self.lose_health(self.heal_amount * buff.get_effectiveness())
+
                 buff.apply_buff()
             else:
+
                 if buff.get_effect() == 'block_defence':
+
                     self.defence = self.default_defence
+
                 self.remove_buff(buff)
-
-    '''def get_range(self):
-        """randomises distance of hostile from player"""
-
-        # TODO add probability of being close
-        range_chance = random.randint(1, 2)
-        if range_chance == 1:
-            self.range = 'close'
-        if range_chance == 2:
-            self.range = 'far' '''
 
     def die(self):
 
