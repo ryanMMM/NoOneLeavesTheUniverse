@@ -3,7 +3,7 @@ weapon_attribute_dictionary = {
         {
             "name": "Wooden Stick",
             "description": "just a wooden stick",
-            "default damage": 25,
+            "default_damage": 25,
             "weapon_type": "starter",
             "cost": 0
         },
