@@ -1,4 +1,4 @@
-from armour import *
+from armour import Helmet, Chestplate, Boots
 from attacks import Attack
 from weapon import Weapon
 from buff import Buff
@@ -17,7 +17,6 @@ def unpack_armour_into_objects():
     armour_output_dictionary = {}
 
     for armour_key in armour_attribute_dictionary:
-
         armour_output_dictionary[armour_key] = {}
         helmet_attributes = armour_attribute_dictionary[armour_key]['helmet']
         chestplate_attributes = armour_attribute_dictionary[armour_key]['chestplate']
@@ -45,7 +44,6 @@ def unpack_buffs_into_objects():
     buff_output_dictionary = {}
 
     for buff_key in buff_attribute_dictionary:
-
         buff_attributes = buff_attribute_dictionary[buff_key]
 
         buff_output_dictionary[buff_key] = Buff(buff_attributes['name'],
@@ -62,7 +60,6 @@ def unpack_potions_into_objects(buff_output_dictionary):
     output_potion_dictionary = {}
 
     for potion_key in potion_attribute_dictionary:
-
         potion_attributes = potion_attribute_dictionary[potion_key]
         potion_buff = buff_output_dictionary[potion_attributes['buff']]
 
@@ -109,7 +106,6 @@ def unpack_weapons_into_objects(attack_output_dictionary):
     weapon_output_dictionary = {}
 
     for weapon_key in weapon_attribute_dictionary:
-
         weapon_attributes = weapon_attribute_dictionary[weapon_key]
         weapon_attacks = attack_output_dictionary[weapon_key]
 
@@ -135,7 +131,6 @@ def unpack_weapon_dealer_weapons_into_dictionary(weapon_output_dictionary):
     # that are hidden in chests
 
     for weapon_dealer_weapon_key in keys_of_weapons_not_in_chests:
-
         weapon_dealer_weapons_output_dictionary[weapon_dealer_weapon_key] = \
             weapon_output_dictionary[weapon_dealer_weapon_key]
     # sets up the list of arms dealer weapons from from the weapons that aren't in chests
@@ -153,7 +148,6 @@ def unpack_hostiles_into_objects():
         hostile_list = []
 
         for hostile_attributes in hostile_attribute_dictionary[hostile_group_key]:
-
             hostile_list.append(Hostile(hostile_attributes['name'],
                                         hostile_attributes['species'],
                                         hostile_attributes['health'],
@@ -175,7 +169,6 @@ def unpack_bosses_into_objects():
     boss_output_dictionary = {}
 
     for boss_key in boss_attribute_dictionary:
-
         boss_attributes = boss_attribute_dictionary[boss_key]
 
         boss_output_dictionary[boss_key] = Hostile(boss_attributes['name'],
@@ -191,13 +184,22 @@ def unpack_bosses_into_objects():
     return boss_output_dictionary
 
 
+armour_object_dictionary = unpack_armour_into_objects()
+buff_object_dictionary = unpack_buffs_into_objects()
+attack_object_dictionary = unpack_attacks_into_objects(buff_object_dictionary)
+weapon_object_dictionary = unpack_weapons_into_objects(attack_object_dictionary)
+weapon_dealer_weapons = unpack_weapon_dealer_weapons_into_dictionary(weapon_object_dictionary)
+potion_object_dictionary = unpack_potions_into_objects(buff_object_dictionary)
+hostile_object_dictionary = unpack_hostiles_into_objects()
+boss_object_dictionary = unpack_bosses_into_objects()
+
+
 def unpack_landmark_collectibles_into_objects():
     """unpacks landmark collectible attributes into objects within a dictionary"""
 
     landmark_collectible_output_dictionary = {}
 
     for landmark_collectible_key in landmark_collectible_attribute_dictionary:
-
         landmark_collectible_attributes = landmark_collectible_attribute_dictionary[landmark_collectible_key]
 
         landmark_collectible_output_dictionary[landmark_collectible_key] = \
@@ -215,7 +217,6 @@ def unpack_treasure_collectibles_into_objects():
     treasure_collectible_output_dictionary = {}
 
     for treasure_collectible_key in treasure_collectible_attribute_dictionary:
-
         treasure_collectible_attributes = treasure_collectible_attribute_dictionary[treasure_collectible_key]
 
         treasure_collectible_output_dictionary[treasure_collectible_key] = \
@@ -227,13 +228,5 @@ def unpack_treasure_collectibles_into_objects():
     return treasure_collectible_output_dictionary
 
 
-armour_object_dictionary = unpack_armour_into_objects()
-buff_object_dictionary = unpack_buffs_into_objects()
-attack_object_dictionary = unpack_attacks_into_objects(buff_object_dictionary)
-weapon_object_dictionary = unpack_weapons_into_objects(attack_object_dictionary)
-weapon_dealer_weapons = unpack_weapon_dealer_weapons_into_dictionary(weapon_object_dictionary)
-potion_object_dictionary = unpack_potions_into_objects(buff_object_dictionary)
 landmark_collectible_object_dictionary = unpack_landmark_collectibles_into_objects()
 treasure_collectible_object_dictionary = unpack_treasure_collectibles_into_objects()
-hostile_object_dictionary = unpack_hostiles_into_objects()
-boss_object_dictionary = unpack_bosses_into_objects()

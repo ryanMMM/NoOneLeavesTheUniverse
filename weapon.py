@@ -63,6 +63,7 @@ class Weapon:
         self.damage = int(self.default_damage * condition_dictionary[self.condition]['damage_multiplier'])
         self.critical_chance = condition_dictionary[self.condition]['critical_chance']
         self.critical_multiplier = condition_dictionary[self.condition]['critical_multiplier']
+        # updates the weapon attributes corresponding to the condition achieved
 
     def get_attribute_dictionary(self):
         """returns attributes in a dictionary format to be saved into JSON"""
@@ -78,13 +79,13 @@ class Weapon:
 
         return attribute_dictionary
 
-    def get_details(self):
+    def display_details(self):
 
         details = self.name
         details += ":\nDamage: " + str(self.damage)
-        details += "\nCondition: " + self.condition
-        details += "\nCritical hit chance: " + str(self.critical_chance)
-        details += "\nCritical hit damage: " + str(self.critical_multiplier * self.damage)
+        details += "\nCondition: " + self.condition.capitalize()
+        details += "\nCritical hit chance: " + str(int(self.critical_chance))
+        details += "\nCritical hit damage: " + str(int(self.critical_multiplier * self.damage))
 
         return details
 

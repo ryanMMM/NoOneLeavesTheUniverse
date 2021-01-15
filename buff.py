@@ -16,7 +16,9 @@ class Buff:
 
         details = self.name
         details += ":\nEffect: " + self.effect
-        details += ":\nDuration: " + str(self.duration)
+        details += "\nDuration: " + str(self.duration)
+
+        return details
 
     def get_effect(self):
 

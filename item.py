@@ -17,7 +17,7 @@ class Item:
     def display_details(self):
 
         details = self.name
-        details += ":\nDescription:" + self.description
+        details += "\nDescription: " + self.description
 
         return details
 
@@ -48,7 +48,8 @@ class Potion(Item):
     def display_details(self):
 
         details = self.name
-        details += self.buff.display_details()
+        details += ":\nBuff: \n" + self.buff.display_details()
+        details += "\nCost: " + str(self.cost)
 
         return details
 
@@ -69,5 +70,7 @@ class Collectible(Item):
     def display_details(self):
 
         details = self.name
-        details += ":\nValue: " + str(self.value) + " coins\n"
-        details += "Description: " + str(self.description)
+        details += ":\nValue " + str(self.value) + " coins\n"
+        details += "Description " + str(self.description)
+
+        return details

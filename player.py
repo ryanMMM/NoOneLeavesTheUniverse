@@ -222,6 +222,7 @@ class Player:
         """removes an item from the inventory"""
 
         if item in self.inventory:
+
             self.safe[item.get_type()].append(item)
             self.inventory.remove(item)
 
@@ -460,8 +461,8 @@ class Player:
                 elif buff.get_effect() == 'regeneration':
 
                     regeneration_amount = self.default_heal_amount * buff.get_effectiveness()
-                    print("You have regenerated " + str(regeneration_amount) + " health"
-                    self.add_health(self.default_heal_amount * buff.get_effectiveness())
+                    print("You have regenerated " + str(regeneration_amount) + " health")
+                    self.add_health(int(self.default_heal_amount * buff.get_effectiveness()))
 
                 elif buff.get_effect() == 'poison':
 

@@ -31,3 +31,12 @@ class Attack:
     def get_variance(self):
 
         return self.variance
+
+    def display_details(self):
+
+        details = self.name
+        details += ":\nDamage multiplier: " + str(self.multiplier)
+        details += "\nBuff: " + str(self.buff)
+        details += "\nAttack multiplier variance: " + str(self.variance)
+
+        return details

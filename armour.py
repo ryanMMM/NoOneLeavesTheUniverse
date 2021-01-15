@@ -35,7 +35,7 @@ class Armour:
 
         details = self.name
         details += ":\nDefense points: " + str(self.defence)
-        details += "\nCost" + str(self.cost)
+        details += "\nCost: " + str(self.cost)
 
         return details
 

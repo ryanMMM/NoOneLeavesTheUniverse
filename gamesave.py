@@ -250,10 +250,6 @@ class GameSave:
             # checks if the composition is a type of boss by checking the last 4 characters of the composition
             # and if so, begins the bossfight with the boss in the composition of the tile
 
-        elif self.player_tile.get_composition() == 'chest':
-
-            pass
-
         elif self.player_tile.get_composition() == 'village':
 
             self.gates_of_village()
@@ -864,9 +860,9 @@ class GameSave:
             if 0 < potion_choice < index:
                 # checks if the selection is within range of the list of potions
 
+                self.player.add_buff(potion.get_buff())
                 self.player.remove_item_from_inventory(potion)
                 # once the player uses the potion, it is removed from their inventory
-                # TODO apply buff
 
             elif potion_choice == index:
 
@@ -895,10 +891,14 @@ class GameSave:
             if spare_or_kill_choice == 's' or spare_or_kill_choice == 'spare':
 
                 self.player.spare()
+                time.sleep(3)
+                self.wilderness()
 
             elif spare_or_kill_choice == 'k' or spare_or_kill_choice == 'kill':
 
                 self.player.kill()
+                time.sleep(3)
+                self.wilderness()
 
             else:
 

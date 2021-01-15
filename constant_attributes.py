@@ -1,4 +1,6 @@
+# stores attributes of all weapons in the game
 weapon_attribute_dictionary = {
+
     "starter_weapon":
         {
             "name": "Wooden Stick",
@@ -49,7 +51,9 @@ weapon_attribute_dictionary = {
         }
 }
 
+# stores attributes of all attacks in the game with reference to the weapon they belong to
 attack_attribute_dictionary = {
+
     "starter_weapon":
         [
             {
@@ -154,7 +158,9 @@ attack_attribute_dictionary = {
         ],
 }
 
+# stores attributes of all armour pieces in the game with respect to the armour class they belong to
 armour_attribute_dictionary = {
+
     "ice":
         {
             "helmet":
@@ -287,7 +293,9 @@ armour_attribute_dictionary = {
         },
 }
 
+# stores the attributes of all the boss hostiles in the game
 boss_attribute_dictionary = {
+
     "giant_boss":
         {
             "name": "The Chained Ice Giant",
@@ -350,7 +358,9 @@ boss_attribute_dictionary = {
         }
 }
 
+# stores the attributes of all the random encounter hostiles in the game with reference to the biome they live in
 hostile_attribute_dictionary = {
+
     "grass_lands":
         [
             {
@@ -503,7 +513,9 @@ hostile_attribute_dictionary = {
         ]
 }
 
+# stores all the changes that each condition will apply to a weapon
 condition_dictionary = {
+
     "puny":
         {
             "damage_multiplier": 0.8,
@@ -530,7 +542,9 @@ condition_dictionary = {
         }
 }
 
+# stores the attributes of all the buffs
 buff_attribute_dictionary = {
+
     "poison_1":
         {
             "name": "Weak Poison",
@@ -589,7 +603,9 @@ buff_attribute_dictionary = {
         }
 }
 
+# stores the attributes of all the potions
 potion_attribute_dictionary = {
+
     "weak_regeneration_potion":
         {
             "name": "Weak Regeneration Potion",
@@ -612,6 +628,87 @@ potion_attribute_dictionary = {
             "cost": 60
         }
 }
+
+# stores the contents of all the chests in the game
+chest_contents_dictionary = {
+
+    "chest_1":
+        {
+            "weapon": "progenitors_steel_blade",
+            "potion": "strong_regeneration_potion",
+            "collectible": ""
+        },
+    "chest_2":
+        {
+            "weapon": "universe_blade",
+            "potion": "strong_regeneration_potion",
+            "collectible": ""
+        }
+}
+
+# stores the player attribute multipliers in each level of player upgrades
+upgrade_progression_dictionary = {
+
+    "health":
+        [
+            1.25,
+            1.5,
+            1.75,
+            2
+        ],
+    "charge":
+        [
+            1,
+            2,
+            3
+        ],
+    "attack_amplification":
+        [
+            1,
+            1.5,
+            2
+        ]
+}
+
+# stores the costs of each player attribute upgrade
+upgrade_cost_dictionary = {
+
+    "health": 50,
+    "charge": 30,
+    "attack_amplification": 40,
+}
+
+# stores the dialogue of each shopkeeper with reference to how they react to repuation levels
+shop_dialogue = {
+    
+    "forgery":
+        {
+            "high_reputation":
+                [
+                    "Please come again if you ever need anything!",
+                    "Thanks for dropping by!"
+                ],
+            "low_reputation":
+                [
+                    "Please don't come back",
+                    "Go forge your weapons somewhere else next time"
+                ]
+        },
+    "potion_shop":
+        {
+            "high_reputation":
+                [
+                    "We've got the best potions in the UNIVERSE, tell your friends!",
+                    "Please come back soon, I love your coins"
+                ],
+            "low_reputation":
+                [
+                    "You stink up the place, please wear some perfume upon your next visit",
+                    "If it wasn't for your money, I'd tell you to leave"
+                ]
+        }
+}
+
 
 landmark_collectible_attribute_dictionary = {
     "progenitor_statue":
@@ -658,6 +755,8 @@ landmark_collectible_attribute_dictionary = {
         },
 }
 
+
+
 treasure_collectible_attribute_dictionary = {
     "platinum_coin":
         {
@@ -682,77 +781,5 @@ treasure_collectible_attribute_dictionary = {
             "name": "An old shoe",
             "description": "smells off",
             "value": 10
-        }
-}
-
-chest_contents_dictionary = {
-    "chest_1":
-        {
-            "weapon": "progenitors_steel_blade",
-            "potion": "strong_regeneration_potion",
-            "collectible": ""
-        },
-    "chest_2":
-        {
-            "weapon": "universe_blade",
-            "potion": "strong_regeneration_potion",
-            "collectible": ""
-        }
-}
-
-upgrade_progression_dictionary = {
-    "health":
-        [
-            1.25,
-            1.5,
-            1.75,
-            2
-        ],
-    "charge":
-        [
-            1,
-            2,
-            3
-        ],
-    "attack_amplification":
-        [
-            1,
-            1.5,
-            2
-        ]
-}
-
-upgrade_cost_dictionary = {
-    "health": 50,
-    "charge": 30,
-    "attack_amplification": 40,
-}
-
-shop_dialogue = {
-    "forgery":
-        {
-            "high_reputation":
-                [
-                    "Please come again if you ever need anything!",
-                    "Thanks for dropping by!"
-                ],
-            "low_reputation":
-                [
-                    "Please don't come back",
-                    "Go forge your weapons somewhere else next time"
-                ]
-        },
-    "potion_shop":
-        {
-            "high_reputation":
-                [
-                    "We've got the best potions in the UNIVERSE, tell your friends!",
-                    "Please come back soon, I love your coins"
-                ],
-            "low_reputation":
-                [
-                    "You stink up the place, please wear some perfume upon your next visit",
-                    "If it wasn't for your money, I'd tell you to leave"
-                ]
         }
 }
