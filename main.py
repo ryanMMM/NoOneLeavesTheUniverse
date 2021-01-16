@@ -1,6 +1,5 @@
-from gamesave import GameSave
+from save_functions import title_screen
 
 if __name__ == "__main__":
 
-    game = GameSave()
-    game.title_screen()
+    title_screen()

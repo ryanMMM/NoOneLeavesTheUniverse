@@ -21,14 +21,16 @@
 # TODO use isnum() for output formatting instead
 # TODO set -1 exception for if statements
 # TODO remove directed buff
-# TODO make attack amplification a player attribute
+
+# TODO put quit everywhere
 
 import time
 import random
 import json
-import re
 
 import winsound
+import dill
+import rich
 
 from player import Player
 from hostile import Hostile
@@ -37,16 +39,14 @@ from map_tiles import Tile
 from constant_objects import *
 from constant_attributes import shop_dialogue
 from output_formatting import *
+from save_functions import save_game
 
 
 class GameSave:
     """GameSave objects represent every new game a player creates"""
 
-    def __init__(self, played_before=False, difficulty_multiplier=1, village_coordinates=[8, 7],
-                 player=Player()):
+    def __init__(self, difficulty_multiplier=1, player=Player(), village_coordinates=[8, 7]):
 
-        self.played_before = played_before
-        # variable that checks if the player has played the game before
         self.difficulty_multiplier = difficulty_multiplier
         self.village_coordinates = village_coordinates
         # location of village on map
@@ -65,75 +65,9 @@ class GameSave:
         # finds how large the map is by checking the coordinates of the last tile in the tile list
         self.player_tile = self.tile_list[self.player.get_tile_list_index()]
 
-    def title_screen(self):
-        """starts the beginning title screen at the beginning of a game launch"""
+    def tutorial(self):
 
-        winsound.PlaySound("Soundtrack/title.wav", winsound.SND_ASYNC | winsound.SND_ALIAS)
-        # plays title music
-        time.sleep(5)
-        print("No One")
-        time.sleep(0.5)
-        print("Leaves")
-        time.sleep(0.5)
-        print("The UNIVERSE")
-        time.sleep(4)
-        clear_screen()
-
-        if not self.played_before:
-
-            self.initialize_player()
-
-    def initialize_player(self):
-        """initializes a new player, taking inputs and creates a player class"""
-
-        clear_screen()
-        print("Enter your name warrior")
-        name = str_input()
-
-        while True:
-
-            print("What difficulty would you like to play on?\n(E)asy\n(M)edium\n(H)ard")
-            difficulty = str_input()
-
-            # changes difficulty multiplier based on user input
-            if difficulty == 'e' or difficulty == 'easy':
-
-                self.difficulty_multiplier = 0.8
-
-                break
-
-            elif difficulty == 'm' or difficulty == 'medium':
-
-                self.difficulty_multiplier = 1
-
-                break
-
-            elif difficulty == 'h' or difficulty == 'hard':
-
-                self.difficulty_multiplier = 1.2
-
-                break
-
-            else:
-
-                print("Invalid input")
-                time.sleep(2)
-
-                self.initialize_player()
-                # prompts the user again
-
-        self.player.change_weapon(weapon_object_dictionary['starter_weapon'])
-        # gives the player the starter weapon at the beginning of the game
-        self.set_up_difficulty_multiplier(self.difficulty_multiplier)
-        # goes through the enemies in the enemy object dictionary and applies difficulty multiplier
-        self.player.change_name(name)
-        # change's the player object's name to the chosen name
-        self.player.change_gamesave(self)
-        # gives the player reference to the current gamesave
-        self.player.spawn_at_village()
-        # spawns the player at the village when initialized
-        time.sleep(0.25)
-        self.gates_of_village()
+        pass
 
     def gates_of_village(self):
         """starts the gameplay loops of being at the gates of the village,
@@ -163,7 +97,7 @@ class GameSave:
                 # prompts the user again if invalid input
 
     def random_event(self, biome):
-        """starts a random event with a 10% chance"""
+        """starts a random event with a 10% chance of starting a fight encounter"""
 
         random_event_chance = random.randint(1, 10)
 
@@ -182,6 +116,7 @@ class GameSave:
             if self.fight():
 
                 for buff in self.player.active_buffs:
+
                     self.player.remove_buff(buff)
 
                 # removes all the active buffs the player recieved during the fight
@@ -248,7 +183,7 @@ class GameSave:
 
             self.boss_fight(self.player_tile.get_composition())
             # checks if the composition is a type of boss by checking the last 4 characters of the composition
-            # and if so, begins the bossfight with the boss in the composition of the tile
+            # and if so, begins the boss fight with the boss in the composition of the tile
 
         elif self.player_tile.get_composition() == 'village':
 
@@ -271,7 +206,7 @@ class GameSave:
         while True:
 
             print("Would you like to visit the (F)orgery, (P)otion shop, (W)eapon Dealer, (A)rmor shop, "
-                  "(U)pgrade center, (M)arketplace, (S)afe, or (L)eave?")
+                  "(U)pgrade center, (M)arketplace, (S)afe, Save (G)ame or (L)eave?")
             village_choice = str_input()
 
             if village_choice == 'f' or village_choice == 'forgery':
@@ -302,6 +237,10 @@ class GameSave:
 
                 self.open_safe()
 
+            elif village_choice == 'g' or village_choice == 'save':
+
+                self.village_save()
+
             elif village_choice == 'l' or village_choice == 'leave':
 
                 break
@@ -310,9 +249,6 @@ class GameSave:
 
                 print("Invalid input")
                 # prompts the user again if invalid input
-
-    def chest(self):
-        """"""
 
     def forgery(self):
         """starts the forgery gameplay loop, giving the player the option to reforge their weapon or leave"""
@@ -464,7 +400,6 @@ class GameSave:
 
         armour_group_key_list = [armour_group_key for armour_group_key in armour_object_dictionary]
         armour_group_list = [armour_object_dictionary[armour_group_key] for armour_group_key in armour_group_key_list]
-        # TODO check if this unorders the helment chestplate and boots
         # puts weapons into a fixed list for the entire duration of this method's call
         # to prevent variance in the order displayed, as dictionaries are unordered
         armour_order_list = ['helmet', 'chestplate', 'boots']
@@ -636,6 +571,11 @@ class GameSave:
             else:
 
                 print("Invalid input")
+
+    def village_save(self):
+
+        # TODO add some text
+        save_game(self)
 
     def fight(self):
         """starts a fight gameplay loop between the current hostile and player"""
@@ -933,7 +873,6 @@ class GameSave:
         """returns the gamesave's attributes in a dictionary format to be saved into JSON"""
 
         attribute_dictionary = {
-            'played_before': self.played_before,
             'difficulty_multiplier': self.difficulty_multiplier,
             'village_coordinates': self.village_coordinates,
             'player': self.player.get_attribute_dictionary()
@@ -949,9 +888,9 @@ class GameSave:
 
         return undefeated_bosses
 
-    def played_before(self):
+    def get_player(self):
 
-        return self.played_before
+        return self.player
 
     def get_difficulty_multiplier(self):
 

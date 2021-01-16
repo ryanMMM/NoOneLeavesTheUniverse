@@ -848,6 +848,13 @@ class Player:
 
         return collectible_names
 
+    def get_leaderboard_data(self):
+        """returns player attributes that are relevant to the online leaderboard"""
+
+        player_leaderboard_list = [self.name, self.reputation, self.intimidation, self.coins]
+
+        return player_leaderboard_list
+
     def get_attribute_dictionary(self):
         """returns player attributes in a dictionary format to be saved into JSON"""
 
