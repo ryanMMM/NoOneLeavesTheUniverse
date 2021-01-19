@@ -1,13 +1,7 @@
-# TODO make whole fight buff that multiplies health by 1.5 and costs 500 coins
-# TODO make heal amount upgradable
-# TODO make spare and kill percentages non hard coded
-
 import time
-import re
 
 from armour import *
 from weapon import Weapon
-
 from calculations import *
 from constant_attributes import upgrade_progression_dictionary, upgrade_cost_dictionary
 from output_formatting import *
@@ -25,6 +19,7 @@ class Player:
         self.name = name
         # player name string
         self.gamesave = gamesave
+        # gives the player a reference to the gamesave object that they are playing in
         self.coordinates = coordinates
         self.x = coordinates[0]
         self.y = coordinates[0]
@@ -86,10 +81,9 @@ class Player:
 
         return self.add_health(self.heal_amount)
 
-    def move(self, direction, steps):
+    def move(self, direction, steps=1):
         """moves player to their intended destination"""
 
-        # TODO maybe fix because this lets people skip over walls?
         destination_coordinates = self.get_destination_coordinates_and_entrance(direction, steps)['destination']
         # stores the coordinates of the tile the player has chosen to move to
         destination_entrance = self.get_destination_coordinates_and_entrance(direction, steps)['entrance']
@@ -222,7 +216,6 @@ class Player:
         """removes an item from the inventory"""
 
         if item in self.inventory:
-
             self.safe[item.get_type()].append(item)
             self.inventory.remove(item)
 
@@ -273,7 +266,7 @@ class Player:
             self.display_safe()
 
             colour_print("Would you like to (T)ake an item into your inventory, "
-                  "(P)ut an item into your safe, (E)xchange a weapon, (C)hange armour, or (B)ack out")
+                         "(P)ut an item into your safe, (E)xchange a weapon, (C)hange armour, or (B)ack out")
             safe_choice = str_input()
 
             if safe_choice == 't' or safe_choice == 'take' and not self.inventory_full():
@@ -296,7 +289,6 @@ class Player:
                             # item is appended to the inventory
                             self.safe['potion'].pop(potion_choice - 1)
                             # item is removed from safe
-                            # TODO check if this will lead to disappearing potions
 
                         else:
 
@@ -439,8 +431,6 @@ class Player:
         """loops through the player's buffs and applies all the effects
         and removes buffs that have finished their duration"""
 
-        # TODO buff that negates defence
-
         for buff in self.active_buffs:
 
             buff.apply_buff()
@@ -579,8 +569,8 @@ class Player:
 
             if self.affordable(upgrade_cost_dictionary['health']):
                 colour_print("Your health has been upgraded by " +
-                      str((self.default_health * upgrade_progression_dictionary['health'][0]) - self.max_health)
-                      + " points")
+                             str((self.default_health * upgrade_progression_dictionary['health'][0]) - self.max_health)
+                             + " points")
                 self.max_health *= upgrade_progression_dictionary['health'][0]
                 # if the player's max health still has not been upgraded
                 # then multiply max health by the first multiplier
@@ -604,8 +594,8 @@ class Player:
                     if self.affordable(upgrade_cost_dictionary['health']):
                         self.max_health = self.default_health * upgrade_progression_dictionary['health']
                         colour_print("Your health has been upgraded by " +
-                              str((self.default_health * upgrade_progression_dictionary['health'][index])
-                                  - self.max_health) + " points")
+                                     str((self.default_health * upgrade_progression_dictionary['health'][index])
+                                         - self.max_health) + " points")
 
                         break
 
@@ -621,7 +611,7 @@ class Player:
 
             if self.affordable(upgrade_cost_dictionary['charge']):
                 colour_print("Your charge has been upgraded by " +
-                      str(upgrade_progression_dictionary['charge'][0]) + " points")
+                             str(upgrade_progression_dictionary['charge'][0]) + " points")
                 self.max_charge += upgrade_progression_dictionary['charge'][0]
                 # if the player's max health still has not been upgraded
                 # then multiply max health by the first multiplier
@@ -645,8 +635,8 @@ class Player:
                     if self.affordable(upgrade_cost_dictionary['charge']):
                         self.max_charge = self.default_health + upgrade_progression_dictionary['charge']
                         colour_print("Your charge has been upgraded by " +
-                              str((self.default_charge + upgrade_progression_dictionary['charge'][index + 1])
-                                  - self.max_charge) + " points")
+                                     str((self.default_charge + upgrade_progression_dictionary['charge'][index + 1])
+                                         - self.max_charge) + " points")
 
                         break
 
@@ -663,7 +653,7 @@ class Player:
 
             if self.affordable(upgrade_cost_dictionary['attack_amplification']):
                 colour_print("Your attack amplification has been upgraded by " +
-                      str(upgrade_progression_dictionary['attack_amplification'][0]) + " points")
+                             str(upgrade_progression_dictionary['attack_amplification'][0]) + " points")
                 self.attack_amplification_amount = \
                     self.default_attack_amplification_amount + upgrade_progression_dictionary['attack_amplification'][0]
                 # if the player's max health still has not been upgraded
@@ -686,11 +676,10 @@ class Player:
                 if self.attack_amplification_amount - add_amount == self.default_attack_amplification_amount:
 
                     if self.affordable(upgrade_cost_dictionary['attack_amplification']):
-
                         self.max_charge = self.default_health + upgrade_progression_dictionary['attack_amplification']
                         colour_print("Your attack amplification has been upgraded by " +
-                              str((self.default_charge + upgrade_progression_dictionary['attack_amplification']
-                                   [index + 1]) - self.attack_amplification_amount) + " points")
+                                     str((self.default_charge + upgrade_progression_dictionary['attack_amplification']
+                                          [index + 1]) - self.attack_amplification_amount) + " points")
 
                     break
 

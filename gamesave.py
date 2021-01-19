@@ -25,12 +25,8 @@
 import time
 import random
 import json
-import os
-from pygame import mixer
 
-import winsound
-import dill
-import rich
+from pygame import mixer
 
 from player import Player
 from hostile import Hostile
@@ -66,8 +62,41 @@ class GameSave:
         self.player_tile = self.tile_list[self.player.get_tile_list_index()]
 
     def tutorial(self):
+        """starts the tutorial gameloop, teaching the player how to fight and giving them some information to understand
+        the gameplay mechanics"""
 
-        pass
+        colour_print("Welcome to the UNIVERSE.\nA 13x15 grid sprawling with monsters to fight."
+                     "\nYou can seek refuge in the village, where you can find all kinds of shops to gear up for the "
+                     "challenge ahead.\nWhen you're ready adventure, you can leave into the wilderness."
+                     "\nPRESS ENTER TO CONTINUE")
+        input()
+        colour_print("You will have weapons (each with their own unique attacks) and potions at your disposal."
+                     "\nNow you will face a practice enemy in this tutorial before entering the UNIVERSE."
+                     "\nPRESS ENTER TO CONTINUE")
+        input()
+
+        # starts the fight, if the player loses, the loop will continue
+        while not self.fight():
+
+            colour_print("Would you like to (t)ry again or (q)uit?")
+            tutorial_death_choice = input()
+
+            if tutorial_death_choice == 't' or tutorial_death_choice == 'try':
+
+                continue
+
+            elif tutorial_death_choice == 'q' or tutorial_death_choice == 'quit':
+
+                save_quit()
+
+            else:
+
+                colour_print("Invalid input", "red")
+
+        time.sleep(0.5)
+        colour_print("Impressive. You're now ready to go out into the UNIVERSE.\nPRESS ENTER TO CONTINUE")
+        input()
+        self.gates_of_village()
 
     def gates_of_village(self):
         """starts the gameplay loops of being at the gates of the village,
@@ -155,24 +184,22 @@ class GameSave:
 
             if wilderness_choice == 'n' or wilderness_choice == 'north':
 
-                # TODO implement regex and steps
-
-                self.player.move('n', 1)
+                self.player.move('n')
                 break
 
             elif wilderness_choice == 's' or wilderness_choice == 'south':
 
-                self.player.move('s', 1)
+                self.player.move('s')
                 break
 
             elif wilderness_choice == 'e' or wilderness_choice == 'east':
 
-                self.player.move('e', 1)
+                self.player.move('e')
                 break
 
             elif wilderness_choice == 'w' or wilderness_choice == 'west':
 
-                self.player.move('w', 1)
+                self.player.move('w')
                 break
 
             elif wilderness_choice == 'q' or wilderness_choice == 'quit':
@@ -332,7 +359,6 @@ class GameSave:
                                  + "\nPrice: " + str(potion.get_cost() * self.player.get_price_multiplier()) + "\n")
                     index += 1
                     # loops through the potions and colour_prints them out in a numbered list
-                    # TODO put this all in a grid from rich library
 
                 colour_print(str(index) + ". Back out\n")
 
@@ -564,7 +590,6 @@ class GameSave:
                                      + str(self.player.get_collectibles()[sell_choice].get_value()) + "coins")
                         self.player.add_money(self.player.get_collectibles()[sell_choice].get_value())
                         # gives the player the amount of money they're owed for selling the collectible
-                        # TODO remove collectible
 
                     elif sell_choice == len(self.player.get_collectibles()):
 
@@ -618,7 +643,7 @@ class GameSave:
 
     def village_save(self):
 
-        # TODO add some text
+        colour_print("You sleep for the night. Saving your progress as you dream of another life in another UNIVERSE.")
         save_game(self)
 
     def fight(self):
@@ -839,7 +864,6 @@ class GameSave:
             # stores a list of potions, pulled from the player's inventory
 
             for potion in potions:
-
                 colour_print(str(index) + ". " + str(potion))
                 index += 1
 
@@ -904,18 +928,6 @@ class GameSave:
 
         for tile in tile_attribute_list:
             self.tile_list.append(Tile(tile['x'], tile['y'], tile['biome'], tile['composition'], tile['item_key']))
-
-    def set_up_difficulty_multiplier(self, difficulty_multiplier):
-        """sets the hostiles and bosses to the correct difficulty multiplier"""
-        # TODO remove this???
-
-        for hostile_group in hostile_object_dictionary:
-
-            for hostile_list in hostile_object_dictionary[hostile_group]:
-                hostile_list.change_difficulty_multiplier(difficulty_multiplier)
-
-        for boss_key in boss_object_dictionary:
-            boss_object_dictionary[boss_key].change_difficulty_multiplier(difficulty_multiplier)
 
     def get_attribute_dictionary(self):
         """returns the gamesave's attributes in a dictionary format to be saved into JSON"""

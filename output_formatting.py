@@ -63,6 +63,8 @@ def display_elements_from_list(list):
     """loops through the different types of items in the player's safe and displays them"""
 
     index = 1
+
     for item in list:
+
         print(str(index) + ". " + str(item))
         index += 1

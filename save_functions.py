@@ -41,6 +41,9 @@ def load_save(player_name):
 
 
 def new_game(gamesave):
+    """starts a new gamesave object, taking in user inputs then generating a player object with the desired
+    attributes"""
+
     new_gamesave = gamesave
     # creates a new game save with default attributes
 
@@ -111,8 +114,8 @@ def new_game(gamesave):
     new_gamesave.player.spawn_at_village()
     # spawns the player at the village when initialized
     time.sleep(0.25)
-    # new_gamesave.tutorial()
-    new_gamesave.gates_of_village()
+    new_gamesave.tutorial()
+    # starts the tutorial at the beginning of a new game
 
 
 def load_game(gamesave):
@@ -145,7 +148,12 @@ def load_game(gamesave):
 
                 save_quit()
 
-            elif load_choice != 'n' or load_choice != 'no':
+            elif load_choice == 'n' or load_choice == 'no':
+
+                break
+                # returns player to menu screen
+
+            else:
 
                 colour_print("Invalid input", "red")
 
@@ -176,14 +184,19 @@ def load_game(gamesave):
 
 
 def start_loaded_game(gamesave):
+    """starts the gameplay"""
 
     gamesave.player.spawn_at_village()
     gamesave.gates_of_village()
+    # starts the gates of village gameplay loop, which is where the player can choose to enter wilderness or the village
 
 
 def save_quit(gamesave=False):
+    """saves the gamesave data and quits the game"""
 
+    # checks if a gamesave is passed to the function, if so, then the gamesave is saved to a file
     if gamesave:
+
         save_game(gamesave)
 
     sys.exit(0)

@@ -14,15 +14,17 @@ def start_game():
 
 
 def title_screen(gamesave):
-    # TODO mention that you added a parameter to remove circular dependencies
-    """starts the beginning title screen at the beginning of a game launch"""
+    """starts the beginning title screen at the beginning of a game launch
+    Note: the gamesave object is passed as a parameter instead of importing gamesave in the
+    save_functions.py folder, as to avoid a circular dependencies, as the save_functions.py folder
+    is imported in the gamesave file"""
 
     clear_screen()
 
     mixer.init()
     mixer.music.load('soundtrack/title_screen_music.mp3')
     mixer.music.play(-1)
-    # loops the title music
+    # the input -1 loops the title music infinitely
     time.sleep(5)
     colour_print("No One")
     time.sleep(0.5)
