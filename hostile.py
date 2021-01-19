@@ -1,4 +1,6 @@
 import random
+
+from output_formatting import *
 # TODO redesign difficulty multiplier
 
 # import Weapons
@@ -46,7 +48,7 @@ class Hostile:
         """causes the hostile to lose health, some is negative by the defence of the hostile"""
 
         health_lost = self.lose_health(attack_damage)
-        print(player_name + " has dealt " + str(health_lost) + " to " + self.name)
+        colour_print(player_name + " has dealt " + str(health_lost) + " to " + self.name)
 
     def add_health(self, health_add_amount):
 
@@ -54,13 +56,13 @@ class Hostile:
 
         if self.health + health_add_amount < self.max_health:
             self.health += health_add_amount
-            print(self.name + " has replenished " + str(health_add_amount) + " health")
+            colour_print(self.name + " has replenished " + str(health_add_amount) + " health")
         else:
             health_add_amount = self.max_health - self.health
-            print(self.name + " has replenished " + str(health_add_amount) + " health")
+            colour_print(self.name + " has replenished " + str(health_add_amount) + " health")
             self.health = self.max_health
         if not health_add_amount:
-            print("You are already at max health!")
+            colour_print("You are already at max health!")
         return health_add_amount
 
     def lose_health(self, health_lose_amount):
@@ -85,19 +87,19 @@ class Hostile:
 
                 if buff.get_effect() == 'block_defence':
 
-                    print(self.name + "'s defence has been removed'")
+                    colour_print(self.name + "'s defence has been removed'")
                     self.defence = 0
 
                 elif buff.get_effect() == 'regeneration':
 
                     regeneration_amount = (self.heal_amount / 2) * buff.get_effectiveness()
-                    print(self.name + "has regenerated " + str(regeneration_amount) + " health from poison")
+                    colour_print(self.name + "has regenerated " + str(regeneration_amount) + " health from poison")
                     self.add_health(regeneration_amount)
 
                 elif buff.get_effect() == 'poison':
 
                     poison_amount = self.heal_amount * buff.get_effectiveness()
-                    print(self.name + "has lost " + str(poison_amount) + " health from poison")
+                    colour_print(self.name + "has lost " + str(poison_amount) + " health from poison")
                     self.lose_health(self.heal_amount * buff.get_effectiveness())
 
                 buff.apply_buff()
@@ -138,7 +140,7 @@ class Hostile:
 
     def administer_buff_from_player(self, buff):
 
-        print("You have administered " + str(buff) + " to " + self.name)
+        colour_print("You have administered " + str(buff) + " to " + self.name)
         self.add_buff(buff)
 
     def get_damage(self):

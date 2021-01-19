@@ -12,7 +12,7 @@
 # TODO make display active buffs method
 # TODO setup invalid input function
 
-# TODO add formatting function as a list that prints each text after a certain amount of time
+# TODO add formatting function as a list that colour_prints each text after a certain amount of time
 # TODO use regex for fights to allow experienced players to attack quickly, and display list for new players
 # TODO implement multiple steps, i.e. north 3
 # TODO show map display
@@ -22,11 +22,11 @@
 # TODO set -1 exception for if statements
 # TODO remove directed buff
 
-# TODO put quit everywhere
-
 import time
 import random
 import json
+import os
+from pygame import mixer
 
 import winsound
 import dill
@@ -39,7 +39,7 @@ from map_tiles import Tile
 from constant_objects import *
 from constant_attributes import shop_dialogue
 from output_formatting import *
-from save_functions import save_game
+from save_functions import save_game, save_quit
 
 
 class GameSave:
@@ -77,11 +77,16 @@ class GameSave:
         while True:
 
             clear_screen()
-            print("You are at the gates of the village. Would you like to venture to the (W)ilderness or (V)illage")
+            colour_print("You are at the gates of the village. "
+                         "Would you like to venture to the (W)ilderness or (V)illage\n\n(Q) to Quit Game")
             venture_choice = str_input()
 
             if venture_choice == 'w' or venture_choice == 'wilderness':
 
+                mixer.init()
+                mixer.music.load('soundtrack/wilderness_music.mp3')
+                mixer.music.play(-1)
+                # loops the wilderness soundtrack
                 self.wilderness()
                 break
                 # once they enter the wilderness, they no longer need the gates of the village gameplay loop
@@ -91,9 +96,14 @@ class GameSave:
                 self.village()
                 # village does not break as once a player leaves the village, they remain at the gates
 
+            elif venture_choice == 'q' or venture_choice == 'quit':
+
+                save_quit(self)
+                break
+
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
                 # prompts the user again if invalid input
 
     def random_event(self, biome):
@@ -107,7 +117,7 @@ class GameSave:
             # starting health is the player's health before the battle
             starting_inventory = self.player.get_inventory()
             # starting inventory is the player's inventory before the battle
-            print("A hostile appeared!")
+            colour_print("A hostile appeared!")
             time.sleep(0.25)
             clear_screen()
             self.hostile = random.choice(hostile_object_dictionary[biome])
@@ -116,7 +126,6 @@ class GameSave:
             if self.fight():
 
                 for buff in self.player.active_buffs:
-
                     self.player.remove_buff(buff)
 
                 # removes all the active buffs the player recieved during the fight
@@ -135,13 +144,12 @@ class GameSave:
     def wilderness(self):
         """starts the wilderness gameplay loop"""
 
-        winsound.PlaySound("Soundtrack/village.wav", winsound.SND_ASYNC | winsound.SND_ALIAS)
-
         while True:
 
             clear_screen()
-            print(self.player.display_navigation_stats())
-            print("Would you like to move (N)orth, (S)outh, (E)ast, (W)est, or (R)eturn to village?")
+            colour_print(self.player.display_navigation_stats())
+            colour_print("Would you like to move (N)orth, (S)outh, (E)ast, (W)est, or (R)eturn to village?"
+                         "\n\n(Q) to Quit Game")
             wilderness_choice = str_input()
             # displays the player's location and stats and asks them with direction they would like to go
 
@@ -167,9 +175,14 @@ class GameSave:
                 self.player.move('w', 1)
                 break
 
+            elif wilderness_choice == 'q' or wilderness_choice == 'quit':
+
+                save_quit(self)
+                break
+
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
 
     def enter_new_tile(self):
         """updates all the necessary player attributes and starts any events based on the tile position of the player"""
@@ -199,14 +212,17 @@ class GameSave:
     def village(self):
         """starts the village gameplay loop"""
 
-        winsound.PlaySound("Soundtrack/village.wav", winsound.SND_ASYNC | winsound.SND_ALIAS)
-        # plays the village music
+        mixer.init()
+        mixer.music.load('soundtrack/village_music.mp3')
+        mixer.music.play(-1)
+        # loops the village music
 
         # starts the respective methods to take the user to where they would like to go based on input
         while True:
 
-            print("Would you like to visit the (F)orgery, (P)otion shop, (W)eapon Dealer, (A)rmor shop, "
-                  "(U)pgrade center, (M)arketplace, (S)afe, Save (G)ame or (L)eave?")
+            colour_print("Would you like to visit the (F)orgery, (P)otion shop, (W)eapon Dealer, (A)rmor shop, "
+                         "(U)pgrade center, (M)arketplace, (S)afe, (M)anually save game, or (L)eave?"
+                         "\n\n(Q) to Quit Game")
             village_choice = str_input()
 
             if village_choice == 'f' or village_choice == 'forgery':
@@ -241,13 +257,17 @@ class GameSave:
 
                 self.village_save()
 
+            elif village_choice == 'q' or village_choice == 'quit':
+
+                save_quit(self)
+
             elif village_choice == 'l' or village_choice == 'leave':
 
                 break
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
                 # prompts the user again if invalid input
 
     def forgery(self):
@@ -257,7 +277,8 @@ class GameSave:
         while True:
 
             self.player.display_monetary_stats()
-            print("Would you like to (R)eforge your weapon for 20 coins or (L)eave the shop?")
+            colour_print("Would you like to (R)eforge your weapon for 20 coins or (L)eave the shop?"
+                         "\n\n(Q) to Quit Game")
             forgery_choice = str_input()
 
             if forgery_choice == 'r' or forgery_choice == 'reforge':
@@ -269,20 +290,24 @@ class GameSave:
             elif forgery_choice == 'l' or forgery_choice == 'leave':
 
                 if self.player.is_reputation_high():
-                    # prints exit dialogue for high reputation if the player has high reputation
+                    # colour_prints exit dialogue for high reputation if the player has high reputation
 
-                    print(random.choice(shop_dialogue['forgery']['high_reputation']))
+                    colour_print(random.choice(shop_dialogue['forgery']['high_reputation']))
 
                 else:
-                    # prints exit dialogue for low reputation if player does not have high reputation
+                    # colour_prints exit dialogue for low reputation if player does not have high reputation
 
-                    print(random.choice(shop_dialogue['forgery']['low_reputation']))
+                    colour_print(random.choice(shop_dialogue['forgery']['low_reputation']))
 
                 break
 
+            elif forgery_choice == 'q' or forgery_choice == 'quit':
+
+                save_quit(self)
+
             else:
 
-                print("Invalid statement")
+                colour_print("Invalid statement")
                 # prompts the user again
 
     def potion_shop(self):
@@ -294,25 +319,24 @@ class GameSave:
         while True:
 
             self.player.display_monetary_stats()
-            print("Welcome to the potion shop! Would you like to (B)uy potions or (L)eave")
+            colour_print("Welcome to the potion shop! Would you like to (B)uy potions or (L)eave\n\n(Q) to Quit Game")
             potion_shop_choice = str_input()
 
             if potion_shop_choice == 'b' or potion_shop_choice == 'buy':
 
                 index = 1
-                print("POTIONS: \n")
+                colour_print("POTIONS: \n")
 
                 for potion in potion_list:
-
-                    print(str(index) + ". " + str(potion).capitalize()
-                          + "\nPrice: " + str(potion.get_cost() * self.player.get_price_multiplier()) + "\n")
+                    colour_print(str(index) + ". " + str(potion).capitalize()
+                                 + "\nPrice: " + str(potion.get_cost() * self.player.get_price_multiplier()) + "\n")
                     index += 1
-                    # loops through the potions and prints them out in a numbered list
+                    # loops through the potions and colour_prints them out in a numbered list
                     # TODO put this all in a grid from rich library
 
-                print(str(index) + ". Back out\n")
+                colour_print(str(index) + ". Back out\n")
 
-                print("Which potion would you like to purchase? (Enter the number of the potion)")
+                colour_print("Which potion would you like to purchase? (Enter the number of the potion)")
                 potion_choice = int_input()
 
                 if 0 < potion_choice < index:
@@ -329,21 +353,25 @@ class GameSave:
 
                 else:
 
-                    print("Invalid input")
+                    colour_print("Invalid input", "red")
 
             elif potion_shop_choice == 'l' or potion_shop_choice == 'leave':
 
                 if self.player.is_reputation_high():
-                    # prints exit dialogue for high reputation if the player has high reputation
+                    # colour_prints exit dialogue for high reputation if the player has high reputation
 
-                    print(random.choice(shop_dialogue['potion_shop']['high_reputation']))
+                    colour_print(random.choice(shop_dialogue['potion_shop']['high_reputation']))
 
                 else:
-                    # prints exit dialogue for low reputation if player does not have high reputation
+                    # colour_prints exit dialogue for low reputation if player does not have high reputation
 
-                    print(random.choice(shop_dialogue['potion_shop']['low_reputation']))
+                    colour_print(random.choice(shop_dialogue['potion_shop']['low_reputation']))
 
                 break
+
+            elif potion_shop_choice == 'q' or potion_shop_choice == 'quit':
+
+                save_quit(self)
 
     def weapon_dealer(self):
         """starts the weapon dealer game loop, allowing the player to purchase weapons"""
@@ -354,24 +382,23 @@ class GameSave:
         while True:
 
             self.player.display_monetary_stats()
-            print("I am Paul the weapon dealer! Would you like to (B)uy weapons or (L)eave")
+            colour_print("I am Paul the weapon dealer! Would you like to (B)uy weapons or (L)eave\n\n(Q) to Quit Game")
             weapon_dealer_choice = str_input()
 
             if weapon_dealer_choice == 'b' or weapon_dealer_choice == 'buy':
 
                 index = 1
-                print("WEAPONS: \n")
+                colour_print("WEAPONS: \n")
 
                 for weapon in weapon_list:
-
-                    print(str(index) + ". " + str(weapon).capitalize()
-                          + "\nPrice: " + str(weapon.get_cost() * self.player.get_price_multiplier()) + "\n")
+                    colour_print(str(index) + ". " + str(weapon).capitalize()
+                                 + "\nPrice: " + str(weapon.get_cost() * self.player.get_price_multiplier()) + "\n")
                     index += 1
-                    # loops through the weapons and prints them out in a numbered list
+                    # loops through the weapons and colour_prints them out in a numbered list
 
-                print(str(index) + ". Back out\n")
+                colour_print(str(index) + ". Back out\n")
 
-                print("Which weapon would you like to purchase? (Enter the number of the weapon)")
+                colour_print("Which weapon would you like to purchase? (Enter the number of the weapon)")
                 weapon_choice = int_input()
 
                 if 0 < weapon_choice < index:
@@ -388,12 +415,20 @@ class GameSave:
 
                 else:
 
-                    print("Invalid input")
+                    colour_print("Invalid input", "red")
 
             elif weapon_dealer_choice == 'l' or weapon_dealer_choice == 'leave':
 
-                print("Thank you for coming by!")
+                colour_print("Thank you for coming by!")
                 break
+
+            elif weapon_dealer_choice == 'q' or weapon_dealer_choice == 'quit':
+
+                save_quit(self)
+
+            else:
+
+                print("Invalid input", "red")
 
     def armour_shop(self):
         """stars the armour shop game loop, allowing the player to purchase armour"""
@@ -408,7 +443,7 @@ class GameSave:
         while True:
 
             self.player.display_monetary_stats()
-            print("Welcome to the armour shop, would you like to (B)uy armour or (L)eave")
+            colour_print("Welcome to the armour shop, would you like to (B)uy armour or (L)eave\n\n(Q) to Quit Game")
             armour_shop_choice = str_input()
 
             if armour_shop_choice == 'b' or armour_shop_choice == 'buy':
@@ -417,21 +452,21 @@ class GameSave:
 
                 for armour_group in armour_group_list:
 
-                    print("\n" + armour_group[random.choice(armour_order_list)].get_set().upper() + "\n")
-                    # loops through and prints the sets of armour
+                    colour_print("\n" + armour_group[random.choice(armour_order_list)].get_set().upper() + "\n")
+                    # loops through and colour_prints the sets of armour
 
                     for armour_piece in armour_group:
-
-                        print(str(index) + ". " + armour_order_list[index % len(armour_order_list)].capitalize() + ": "
-                              + str(armour_group[armour_piece]) + "\nCost: "
-                              + str(armour_group[armour_piece].get_cost()) * self.player.get_price_multiplier())
-                        # loops through and prints all the armor pieces within each set of armour
+                        colour_print(
+                            str(index) + ". " + armour_order_list[index % len(armour_order_list)].capitalize() + ": "
+                            + str(armour_group[armour_piece]) + "\nCost: "
+                            + str(armour_group[armour_piece].get_cost()) * self.player.get_price_multiplier())
+                        # loops through and colour_prints all the armor pieces within each set of armour
 
                         index += 1
 
-                print(str(index) + ". Back out")
+                colour_print(str(index) + ". Back out")
 
-                print("Which armour piece would you like to purchase? (Enter the number of the armour piece)")
+                colour_print("Which armour piece would you like to purchase? (Enter the number of the armour piece)")
                 armour_choice = str_input()
 
                 if armour_choice < index:
@@ -452,16 +487,20 @@ class GameSave:
 
                 else:
 
-                    print("Invalid input")
+                    colour_print("Invalid input", "red")
 
             elif armour_shop_choice == 'l' or armour_shop_choice == 'leave':
 
-                print("Thanks for coming by!")
+                colour_print("Thanks for coming by!")
                 break
+
+            elif armour_shop_choice == 'q' or armour_shop_choice == 'quit':
+
+                save_quit(self)
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
 
     def upgrade_center(self):
         """starts the upgrade center game loop, allowing the player to upgrade their attributes"""
@@ -469,8 +508,8 @@ class GameSave:
         while True:
 
             self.player.display_monetary_stats()
-            print("Welcome to the upgrade center, would you like to upgrade "
-                  "(H)ealth, (C)harge, or (A)ttack Amplification, or would you like to (L)eave?")
+            colour_print("Welcome to the upgrade center, would you like to upgrade "
+                         "(H)ealth, (C)harge, or (A)ttack Amplification, or would you like to (L)eave?")
             upgrade_choice = str_input()
 
             if upgrade_choice == 'h' or upgrade_choice == 'health':
@@ -487,12 +526,12 @@ class GameSave:
 
             elif upgrade_choice == 'l' or upgrade_choice == 'leave':
 
-                print("Thanks for coming by!")
+                colour_print("Thanks for coming by!")
                 break
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
 
     def marketplace(self):
         """starts the weapon dealer game loop, allowing the player to sell collectibles"""
@@ -500,7 +539,7 @@ class GameSave:
         while True:
 
             self.player.display_monetary_stats()
-            print("Welcome to the market! Would you like to (S)ell your collectibles or (L)eave?")
+            colour_print("Welcome to the market! Would you like to (S)ell your collectibles or (L)eave?")
             marketplace_choice = str_input()
 
             if marketplace_choice == 's' or marketplace_choice == 'sell':
@@ -511,18 +550,18 @@ class GameSave:
                     collectible_names_and_values = [str(collectible).capitalize() + " \nValue: "
                                                     + collectible.get_value() + "\n"
                                                     for collectible in self.player.get_collectibles()]
-                    print("YOUR COLLECTIBLES:\n")
+                    colour_print("YOUR COLLECTIBLES:\n")
                     display_elements_from_list(collectible_names_and_values)
                     # displays the player's collectibles and their respective values
-                    print(str(len(self.player.get_collectibles()) + 1) + ". Back out")
-                    print("\nEnter the item number you would like to sell")
+                    colour_print(str(len(self.player.get_collectibles()) + 1) + ". Back out")
+                    colour_print("\nEnter the item number you would like to sell")
                     sell_choice = int_input()
 
                     if 0 < sell_choice <= len(self.player.get_collectibles()):
                         # checks if the selection is within range of the list of collectibles
 
-                        print("You sold " + self.player.get_collectible_names()[sell_choice] + " for "
-                              + str(self.player.get_collectibles()[sell_choice].get_value()) + "coins")
+                        colour_print("You sold " + self.player.get_collectible_names()[sell_choice] + " for "
+                                     + str(self.player.get_collectibles()[sell_choice].get_value()) + "coins")
                         self.player.add_money(self.player.get_collectibles()[sell_choice].get_value())
                         # gives the player the amount of money they're owed for selling the collectible
                         # TODO remove collectible
@@ -534,43 +573,48 @@ class GameSave:
 
                     else:
 
-                        print("Invalid input")
+                        colour_print("Invalid input", "red")
 
                 else:
 
-                    print("You have no collectibles to sell! Get out and come back when you have something for me!")
+                    colour_print(
+                        "You have no collectibles to sell! Get out and come back when you have something for me!")
 
                     break
 
             elif marketplace_choice == 'l' or marketplace_choice == 'leave':
 
-                print("Thanks for coming by!")
+                colour_print("Thanks for coming by!")
                 break
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
 
     def open_safe(self):
 
         while True:
 
-            print("You arrive at your safe. Would you like to (O)pen it or (L)eave?")
+            colour_print("You arrive at your safe. Would you like to (O)pen it or (L)eave?\n\n(Q) to Quit Game")
             safe_choice = str_input()
 
             if safe_choice == 'o' or safe_choice == 'open':
 
-                print("You unlock your safe...")
+                colour_print("You unlock your safe...")
                 self.player.safe_interface()
 
             elif safe_choice == 'l' or safe_choice == 'leave':
 
-                print("You leave your safe")
+                colour_print("You leave your safe")
                 break
+
+            elif safe_choice == 'q' or safe_choice == 'quit':
+
+                save_quit(self)
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
 
     def village_save(self):
 
@@ -580,11 +624,14 @@ class GameSave:
     def fight(self):
         """starts a fight gameplay loop between the current hostile and player"""
 
+        mixer.init()
+        mixer.music.load('soundtrack/fight_music.mp3')
+        mixer.music.play(-1)
+        # loops the fight music
+
         self.hostile.change_difficulty_multiplier(self.difficulty_multiplier)
         # ensures that the hostile has the correct attributes according to the difficulty multiplier
         clear_screen()
-        winsound.PlaySound("Soundtrack/fight.wav", winsound.SND_ASYNC | winsound.SND_ALIAS)
-        # plays fight music
         turn_count = 0
         # turn count is initialized at 0, counts the amount of player turns that occur during the fight
         self.attack_amplification = 1
@@ -593,11 +640,10 @@ class GameSave:
 
         # fight loop, ends when hostile or player health reaches 0 (when either dies)
         while self.player.is_alive() and self.hostile.is_alive():
-
             time.sleep(0.4)
-            print(self.player.display_battle_stats())
+            colour_print(self.player.display_battle_stats())
             time.sleep(0.4)
-            print(self.hostile.display_battle_stats())
+            colour_print(self.hostile.display_battle_stats())
             self.player_turn()
             self.hostile_turn()
             self.player.apply_buffs()
@@ -610,7 +656,7 @@ class GameSave:
         # otherwise the player has to reset progress to the beginning of the day
         if not self.hostile.is_alive():
 
-            print("You Win!")
+            colour_print("You Win!")
             self.spare_or_kill()
             # if the hostile is dead when the battle ends, then the player wins, and they can choose to spare or kill
             # an enemy
@@ -628,13 +674,16 @@ class GameSave:
 
         while True:
 
-            print("You have reached the abode of a boss, would you like to (F)ight or (L)eave")
+            colour_print("You have reached the abode of a boss, would you like to (F)ight or (L)eave"
+                         "\n\n(Q) to Quit Game")
             boss_fight_choice = str_input()
 
             if boss_fight_choice == 'f' or boss_fight_choice == 'fight':
 
                 starting_health = self.player.get_health()
                 # saves the player's starting health before the fight
+                starting_inventory = self.player.get_inventory()
+                # saves the player's starting inventory before the fight
                 self.hostile = boss_object_dictionary[boss]
                 # loads the boss object into the game save's hostile attribute
 
@@ -652,7 +701,7 @@ class GameSave:
 
                 else:
 
-                    self.player.die(starting_health)
+                    self.player.die(starting_health, starting_inventory)
                     self.player.respawn()
                     self.enter_new_tile()
                     # if the player loses the battle and dies, they spawn back at the village at their starting health
@@ -664,16 +713,20 @@ class GameSave:
                 self.wilderness()
                 # sends the player back to the wilderness
 
+            elif boss_fight_choice == 'q' or boss_fight_choice == 'quit':
+
+                save_quit(self)
+
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
 
     def player_turn(self):
         """starts the player's turn during a fight, prompting them on what they would like to do"""
 
         while True:
 
-            print("Would you like to (A)ttack or (P)erform an action")
+            colour_print("Would you like to (A)ttack or (P)erform an action")
             player_choice = str_input()
 
             # brings up the attack menu or action menu based on the users input
@@ -691,7 +744,7 @@ class GameSave:
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
                 # prompts the user again if invalid input
 
     def choose_attack(self):
@@ -703,11 +756,10 @@ class GameSave:
             index = 1
 
             for attack in self.player.weapon.get_attacks():
-
-                print(str(index) + ". " + str(attack))
+                colour_print(str(index) + ". " + str(attack))
                 index += 1
 
-            print(str(index) + ". Back out")
+            colour_print(str(index) + ". Back out")
 
             attack_choice = int_input()
 
@@ -724,7 +776,6 @@ class GameSave:
                 # calculates the damage dealt to the enemy by multiplying the variables
 
                 if str(chosen_attack.get_buff()):
-
                     self.hostile.add_buff(Buff(chosen_attack.buff))
                     # if the attack has a buff in it, that buff is applied to the enemy
 
@@ -744,7 +795,7 @@ class GameSave:
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
                 # prompts the user again if invalid input is given
 
     def choose_action(self):
@@ -752,7 +803,7 @@ class GameSave:
 
         while True:
 
-            print("Would you like to (H)eal, (A)mplify attack, (U)se a potion, (R)echarge, or (B)ack out")
+            colour_print("Would you like to (H)eal, (A)mplify attack, (U)se a potion, (R)echarge, or (B)ack out")
             action_choice = str_input()
 
             # executes an action based on the player's choice, calling the action's respective methods
@@ -774,7 +825,7 @@ class GameSave:
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
                 # prompts the user again if invalid input is given
 
     def choose_potion(self):
@@ -789,10 +840,10 @@ class GameSave:
 
             for potion in potions:
 
-                print(str(index) + ". " + str(potion))
+                colour_print(str(index) + ". " + str(potion))
                 index += 1
 
-            print(str(index) + ". Back out")
+            colour_print(str(index) + ". Back out")
 
             potion_choice = int_input()
             potion = potions[potion_choice]
@@ -811,7 +862,7 @@ class GameSave:
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
                 # prompts the user again if invalid input is given
 
     def hostile_turn(self):
@@ -824,7 +875,7 @@ class GameSave:
 
         while True:
 
-            print("(S)PARE or (K)ILL")
+            colour_print("(S)PARE or (K)ILL")
             spare_or_kill_choice = str_input()
 
             # starts the player object's respective methods based on the player's choice
@@ -842,31 +893,28 @@ class GameSave:
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
                 # prompts the user again if invalid input is given
 
     def unpack_tiles(self):
         """unpacks tile attributes from JSON file and creates a list of objects with those attributes"""
 
         with open('tiles.json') as t:
-
             tile_attribute_list = json.load(t)
 
         for tile in tile_attribute_list:
-
             self.tile_list.append(Tile(tile['x'], tile['y'], tile['biome'], tile['composition'], tile['item_key']))
 
     def set_up_difficulty_multiplier(self, difficulty_multiplier):
         """sets the hostiles and bosses to the correct difficulty multiplier"""
+        # TODO remove this???
 
         for hostile_group in hostile_object_dictionary:
 
             for hostile_list in hostile_object_dictionary[hostile_group]:
-
                 hostile_list.change_difficulty_multiplier(difficulty_multiplier)
 
         for boss_key in boss_object_dictionary:
-
             boss_object_dictionary[boss_key].change_difficulty_multiplier(difficulty_multiplier)
 
     def get_attribute_dictionary(self):

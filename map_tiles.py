@@ -77,7 +77,7 @@ class Tile:
 
         elif self.y == 1:
 
-            '''there is no need to account for the top right or top left corner edge cases as 
+            '''there is no need to account for the top right or top left corner edge cases as
             they have been checked in the previous conditional statements'''
             self.entrances = [[self.x + 1, self.y], [self.x - 1, self.y], [self.x, self.y + 1]]
             # if the tile is at the bottom edge but not at a corner
@@ -85,7 +85,7 @@ class Tile:
 
         elif self.y == y_size:
 
-            '''there is no need to account for the bottom right or bottom left corner edge cases as 
+            '''there is no need to account for the bottom right or bottom left corner edge cases as
             they have been checked in the previous conditional statements'''
             self.entrances = [[self.x + 1, self.y], [self.x - 1, self.y], [self.x, self.y - 1]]
             # if the tile is at the top edge but not at a corner
@@ -108,7 +108,7 @@ class Tile:
 
             if self.composition in block_compositions:
 
-                print("You cannot go there, there is a " + self.composition + " in your way")
+                colour_print("You cannot go there, there is a " + self.composition + " in your way")
 
                 return False
 
@@ -118,19 +118,19 @@ class Tile:
 
         elif player_coordinates in self.walls_surrounding_tile:
 
-            print("You cannot go there, there is a wall in your way")
+            colour_print("You cannot go there, there is a wall in your way")
 
             return False
 
         elif self.item_key:
 
-            print("This place is locked")
+            colour_print("This place is locked")
 
             return False
 
         else:
 
-            print("TEST")
+            colour_print("TEST")
 
     def unlock(self, item_key):
 
@@ -147,7 +147,7 @@ class Tile:
 
         else:
 
-            print("Not unlocked")
+            colour_print("Not unlocked")
 
             return False
 

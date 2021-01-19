@@ -1,5 +1,26 @@
 import os
 import sys
+import time
+
+from rich.progress import track
+from rich.console import Console
+
+
+def colour_print(string, font_colour="green", background_colour="black",
+ allignment="center"):
+
+    console = Console()
+    style = "bold " + font_colour + " on " + background_colour
+    console.print(string, justify=allignment, style=style)
+
+
+def loading_bar(string, font_colour="green", background_colour="black"):
+
+    style = "bold " + font_colour + " on " + background_colour
+
+    for percentage in track(range(100), description=string, style=style):
+
+        time.sleep(0.025)
 
 
 def clear_screen():

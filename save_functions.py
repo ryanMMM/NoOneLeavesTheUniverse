@@ -3,10 +3,7 @@ import sys
 import time
 from os import path
 
-import winsound
-
-from gamesave import GameSave
-from output_formatting import clear_screen, str_input
+from output_formatting import clear_screen, str_input, colour_print, loading_bar
 from constant_objects import weapon_object_dictionary
 
 
@@ -18,13 +15,13 @@ def save_game(gamesave_object):
     # checks if player has already created a save
     if path.exists(absolute_save_path):
 
-        pass
-        # TODO add message to show user that save exists (thank you for playing again)
+        colour_print("Saving data in " + str(gamesave_object.get_player()) + "'s save")
 
     else:
 
-        pass
-        # TODO add message to show user that it is their first time
+        colour_print("Creating a new save")
+
+    loading_bar("Saving...")
 
     with open(save_path, 'wb') as save:
 
@@ -43,51 +40,14 @@ def load_save(player_name):
     return loaded_save
 
 
-def title_screen():
-    """starts the beginning title screen at the beginning of a game launch"""
-
-    winsound.PlaySound("Soundtrack/title.wav", winsound.SND_ASYNC | winsound.SND_ALIAS)
-    # plays title music
-    time.sleep(5)
-    print("No One")
-    time.sleep(0.5)
-    print("Leaves")
-    time.sleep(0.5)
-    print("The UNIVERSE")
-    time.sleep(4)
-    clear_screen()
-
-    while True:
-
-        print("Menu:\n(N)ew game\n(L)oad game\n(Q)uit game")
-        menu_choice = str_input()
-
-        if menu_choice == 'n' or menu_choice == 'new':
-
-            new_game()
-
-        elif menu_choice == 'l' or menu_choice == 'load':
-
-            load_game()
-
-        elif menu_choice == 'q' or menu_choice == 'quit':
-
-            save_quit()
-
-        else:
-
-            print("Invalid input")
-
-
-def new_game():
-
-    new_gamesave = GameSave()
+def new_game(gamesave):
+    new_gamesave = gamesave
     # creates a new game save with default attributes
 
     while True:
 
         clear_screen()
-        print("Enter your name warrior")
+        colour_print("Enter your name warrior")
         player_name = str_input()
 
         save_path = 'saves/' + player_name + '.pickle'
@@ -96,19 +56,19 @@ def new_game():
         # checks if a save already exists under the player name
         if path.exists(absolute_save_path):
 
-            print("The name " + player_name + " is already taken on this device. Please try another name")
+            colour_print("The name " + player_name + " is already taken on this device. Please try another name")
 
         else:
 
             time.sleep(0.25)
-            print("Welcome to the UNIVERSE " + player_name)
+            colour_print("Welcome to the UNIVERSE, " + player_name.capitalize())
             time.sleep(0.5)
 
             break
 
     while True:
 
-        print("What difficulty would you like to play on?\n(E)asy\n(M)edium\n(H)ard")
+        colour_print("What difficulty would you like to play on?\n(E)asy\n(M)edium\n(H)ard\n\n(Q) to Quit Game")
         difficulty = str_input()
 
         # changes difficulty multiplier based on user input
@@ -130,9 +90,13 @@ def new_game():
 
             break
 
+        elif difficulty == 'q' or difficulty == 'quit':
+
+            save_quit()
+
         else:
 
-            print("Invalid input")
+            colour_print("Invalid input", "red")
             time.sleep(2)
             # prompts the user again
 
@@ -147,16 +111,17 @@ def new_game():
     new_gamesave.player.spawn_at_village()
     # spawns the player at the village when initialized
     time.sleep(0.25)
-    new_gamesave.tutorial()
+    # new_gamesave.tutorial()
+    new_gamesave.gates_of_village()
 
 
-def load_game():
+def load_game(gamesave):
     """checks if player exists already, if not, the player is initialized"""
 
     while True:
 
         clear_screen()
-        print("Enter the name associated with your save")
+        colour_print("Enter the name associated with your save")
         player_name = str_input()
 
         save_path = 'saves/' + player_name + '.pickle'
@@ -165,7 +130,8 @@ def load_game():
         # checks if player has already created a save
         if path.exists(absolute_save_path):
 
-            print("Found " + player_name + "'s save. Would you like to load the save? (Y)es or (N)o")
+            colour_print("Found " + player_name + "'s save. Would you like to load the save? (Y)es or (N)o"
+                                                  "\n\n(Q) to Quit Game")
             load_choice = str_input()
 
             if load_choice == 'y' or load_choice == 'yes':
@@ -175,16 +141,21 @@ def load_game():
 
                 break
 
+            elif load_choice == 'q' or load_choice == 'quit':
+
+                save_quit()
+
             elif load_choice != 'n' or load_choice != 'no':
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
 
         else:
 
             while True:
 
-                print("No save was found under your name. Would you like to (E)nter another name, (S)tart a new game,"
-                      " or (Q)uit game")
+                colour_print("No save was found under your name. "
+                             "Would you like to (E)nter another name, (S)tart a new game,"
+                             " or (Q)uit game")
                 no_save_choice = str_input()
 
                 if no_save_choice == 'e' or no_save_choice == 'enter':
@@ -193,7 +164,7 @@ def load_game():
 
                 elif no_save_choice == 's' or no_save_choice == 'start':
 
-                    new_game()
+                    new_game(gamesave)
 
                 elif no_save_choice == 'q' or no_save_choice == 'quit':
 
@@ -201,7 +172,7 @@ def load_game():
 
                 else:
 
-                    print("Invalid input")
+                    colour_print("Invalid input", "red")
 
 
 def start_loaded_game(gamesave):
@@ -213,7 +184,6 @@ def start_loaded_game(gamesave):
 def save_quit(gamesave=False):
 
     if gamesave:
-
         save_game(gamesave)
 
     sys.exit(0)

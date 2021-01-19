@@ -100,22 +100,22 @@ class Player:
         # checking edge cases
         if destination_coordinates[0] > self.gamesave.get_x_size():
 
-            print("You cannot move north, you are on the north edge of the UNIVERSE")
+            colour_print("You cannot move north, you are on the north edge of the UNIVERSE")
             self.gamesave.wilderness()
 
         elif destination_coordinates[0] < 1:
 
-            print("You cannot move south, you are on the south edge of the UNIVERSE")
+            colour_print("You cannot move south, you are on the south edge of the UNIVERSE")
             self.gamesave.wilderness()
 
         elif destination_coordinates[1] > self.gamesave.get_y_size():
 
-            print("You cannot move east, you are on the east edge of the UNIVERSE")
+            colour_print("You cannot move east, you are on the east edge of the UNIVERSE")
             self.gamesave.wilderness()
 
         elif destination_coordinates[1] < 1:
 
-            print("You cannot move west, you are on the west edge of the UNIVERSE")
+            colour_print("You cannot move west, you are on the west edge of the UNIVERSE")
             self.gamesave.wilderness()
 
         elif self.gamesave.tile_list[destination_index].is_passable(destination_entrance):
@@ -140,7 +140,7 @@ class Player:
     def teleport(self, coordinates):
         """alters player's coordinates to provided coordinates"""
 
-        print("Teleporting...")
+        colour_print("Teleporting...")
         time.sleep(1.5)
         self.update_coordinates(coordinates)
         self.update_tile_list_index()
@@ -167,7 +167,7 @@ class Player:
 
         if len(self.inventory) >= self.inventory_space:
 
-            print("Your inventory is full")
+            colour_print("Your inventory is full")
 
             return True
 
@@ -200,8 +200,8 @@ class Player:
     def equip_weapon(self, new_weapon):
         """equips a new weapon for the player to use and puts their old weapon in their inventory"""
 
-        print("You have equipped " + str(self.safe['weapon']) + " and " + str(self.weapon) +
-              " has been added to your safe")
+        colour_print("You have equipped " + str(self.safe['weapon']) + " and " + str(self.weapon) +
+                     " has been added to your safe")
         self.safe['weapon'].append(self.weapon)
         self.weapon = new_weapon
 
@@ -214,7 +214,7 @@ class Player:
 
         else:
 
-            print("Your inventory is full. Item has been adeed to your safe")
+            colour_print("Your inventory is full. Item has been adeed to your safe")
             self.safe[item.get_type()].append(item)
             # if a player's inventory is full, the item is sent to the safe
 
@@ -233,12 +233,12 @@ class Player:
 
             # inventory interface is not available if a player's inventory is empty
             self.display_inventory()
-            print("Would you like to (S)end an item to your safe or (B)ack out")
+            colour_print("Would you like to (S)end an item to your safe or (B)ack out")
             inventory_choice = str_input()
 
             if inventory_choice == 'send' or inventory_choice == 's':
 
-                print("Which item would you like to send to your safe (enter the number)")
+                colour_print("Which item would you like to send to your safe (enter the number)")
                 safe_choice = int_input()
 
                 if 0 < safe_choice <= len(self.inventory):
@@ -251,7 +251,7 @@ class Player:
 
                 else:
 
-                    print("Invalid Input")
+                    colour_print("Invalid input", "red")
                     # prompts the player again if invalid input
 
             elif inventory_choice == 'back' or inventory_choice == 'b':
@@ -261,7 +261,7 @@ class Player:
 
             else:
 
-                print("Invalid Input")
+                colour_print("Invalid input", "red")
                 # prompts the user again if invalid input
 
     def safe_interface(self):
@@ -272,7 +272,7 @@ class Player:
             self.display_inventory()
             self.display_safe()
 
-            print("Would you like to (T)ake an item into your inventory, "
+            colour_print("Would you like to (T)ake an item into your inventory, "
                   "(P)ut an item into your safe, (E)xchange a weapon, (C)hange armour, or (B)ack out")
             safe_choice = str_input()
 
@@ -280,13 +280,13 @@ class Player:
 
                 while True:
 
-                    print("Would you like to take a (P)otion, (C)ollectible, or (B)ack out")
+                    colour_print("Would you like to take a (P)otion, (C)ollectible, or (B)ack out")
                     equip_choice = str_input()
 
                     if equip_choice == 'p' or equip_choice == 'potion':
 
                         display_elements_from_list(self.safe['potion'])
-                        print("Enter the potion number you would like to equip")
+                        colour_print("Enter the potion number you would like to equip")
                         potion_choice = int_input()
 
                         if 0 < potion_choice <= len(self.safe['potion']):
@@ -300,12 +300,12 @@ class Player:
 
                         else:
 
-                            print("Invalid input")
+                            colour_print("Invalid input", "red")
 
                     elif equip_choice == 'c' or equip_choice == 'collectible':
 
                         display_elements_from_list(self.safe['collectible'])
-                        print("Enter the weapon number you would like to equip")
+                        colour_print("Enter the weapon number you would like to equip")
                         collectible_choice = int_input()
 
                         if collectible_choice <= len(self.safe['collectible']):
@@ -315,7 +315,7 @@ class Player:
 
                         else:
 
-                            print("Invalid input")
+                            colour_print("Invalid input", "red")
                             # prompts the user again if invalid input
 
                     elif equip_choice == 'b' or equip_choice == 'back':
@@ -324,7 +324,7 @@ class Player:
 
                     else:
 
-                        print("Invalid Input")
+                        colour_print("Invalid input", "red")
                         # prompts the user again if invalid input
 
             elif safe_choice == 'p' or safe_choice == 'put':
@@ -335,7 +335,7 @@ class Player:
             elif safe_choice == 'e' or safe_choice == 'exchange':
 
                 display_elements_from_list(self.safe['weapon'])
-                print("Enter the weapon number you would like to equip")
+                colour_print("Enter the weapon number you would like to equip")
                 weapon_choice = int_input()
 
                 if 0 < weapon_choice <= len(self.safe['weapon']):
@@ -352,12 +352,12 @@ class Player:
 
                 else:
 
-                    print("Invalid input")
+                    colour_print("Invalid input", "red")
 
             elif safe_choice == 'c' or safe_choice == 'change':
 
                 display_elements_from_list(self.safe['armour'])
-                print("Enter the armour number you would like to equip")
+                colour_print("Enter the armour number you would like to equip")
                 armour_choice = int_input()
 
                 if armour_choice <= len(self.safe['armour']):
@@ -373,7 +373,7 @@ class Player:
 
                 else:
 
-                    print("Invalid input")
+                    colour_print("Invalid input", "red")
                     # prompts the user again if invalid input
 
             elif safe_choice == 'b' or safe_choice == 'back':
@@ -382,24 +382,24 @@ class Player:
 
             elif self.inventory_full():
 
-                print("Your inventory is full")
+                colour_print("Your inventory is full")
 
             else:
 
-                print("Invalid input")
+                colour_print("Invalid input", "red")
                 # prompts the user again if invalid input
 
     def display_inventory(self):
 
-        print("INVENTORY (inventory size " + str(self.inventory_space) + "): ")
+        colour_print("INVENTORY (inventory size " + str(self.inventory_space) + "): ")
         display_elements_from_list(self.inventory)
 
     def display_safe(self):
 
-        print("SAFE:")
+        colour_print("SAFE:")
 
         for item_group in self.safe:
-            print("\n" + item_group.capitalize() + ":\n")
+            colour_print("\n" + item_group.capitalize() + ":\n")
             display_elements_from_list(self.safe[item_group])
             # separates the item types in the safe and displays them in groups
 
@@ -407,24 +407,24 @@ class Player:
         """causes the player to lose health due to hostile attack as specified by parameter attack_damage"""
 
         health_lost = self.lose_health(attack_damage)
-        print(hostile_name + " has dealt " + str(health_lost) + " to " + self.name)
+        colour_print(hostile_name + " has dealt " + str(health_lost) + " to " + self.name)
 
     def gain_charge(self):
         """causes the player to gain charge"""
 
         if self.charge < self.default_charge:
 
-            print("Charging...")
+            colour_print("Charging...")
             time.sleep(1)
 
             if self.charge + self.charge_add_amount <= self.default_charge:
 
-                print("You have gained " + str(self.charge_add_amount) + " charge")
+                colour_print("You have gained " + str(self.charge_add_amount) + " charge")
                 self.charge += self.charge_add_amount
 
             else:
 
-                print("You have gained " + str(self.default_charge - self.charge) + " charge")
+                colour_print("You have gained " + str(self.default_charge - self.charge) + " charge")
                 self.charge = self.default_charge
                 # if the player's charge would be past maximum charge after charging, then it sets the charge to maximum
                 # to prevent the player getting more charge than the maximum amount of charge
@@ -433,7 +433,7 @@ class Player:
         """causes the player to gain the amount of money specified in the parameter amount"""
 
         self.coins += amount
-        print("You gained " + str(amount) + " coins")
+        colour_print("You gained " + str(amount) + " coins")
 
     def apply_buffs(self):
         """loops through the player's buffs and applies all the effects
@@ -450,24 +450,24 @@ class Player:
 
                 if buff.get_effect() == 'block_healing':
 
-                    print("Your healing has been blocked!")
+                    colour_print("Your healing has been blocked!")
                     self.heal_amount = 0
 
                 elif buff.get_effect() == 'block_defence':
 
-                    print("Your defence has been removed!")
+                    colour_print("Your defence has been removed!")
                     self.defence = 0
 
                 elif buff.get_effect() == 'regeneration':
 
                     regeneration_amount = self.default_heal_amount * buff.get_effectiveness()
-                    print("You have regenerated " + str(regeneration_amount) + " health")
+                    colour_print("You have regenerated " + str(regeneration_amount) + " health")
                     self.add_health(int(self.default_heal_amount * buff.get_effectiveness()))
 
                 elif buff.get_effect() == 'poison':
 
                     poison_amount = (self.heal_amount / 2) * buff.get_effectiveness()
-                    print("You have lost " + str(poison_amount) + " from poison")
+                    colour_print("You have lost " + str(poison_amount) + " from poison")
                     self.lose_health((self.heal_amount / 2) * buff.get_effectiveness())
 
                 buff.apply_buff()
@@ -509,7 +509,7 @@ class Player:
 
         else:
 
-            print("You cannot afford this")
+            colour_print("You cannot afford this")
 
             return False
 
@@ -518,7 +518,7 @@ class Player:
 
         if self.purchase(20):
             self.weapon.reforge()
-            print("Your weapon has been reforged, it is now " + str(self.weapon.get_condition()))
+            colour_print("Your weapon has been reforged, it is now " + str(self.weapon.get_condition()))
 
     def buy_item(self, price, item):
         """allows the player to buy an item for a price and adds it to their inventory"""
@@ -527,7 +527,7 @@ class Player:
 
             if self.purchase(price):
                 self.inventory.append(item)
-                print(item + " has been added to your inventory")
+                colour_print(item + " has been added to your inventory")
 
     def spare(self):
         """method that does all of the attribute changes when a player spares a hostile"""
@@ -535,8 +535,8 @@ class Player:
         self.reputation = min(self.reputation + 5, 100)
         self.intimidation = max(self.intimidation - 5, 0)
         # min and max ensure that neither intimidation nor reputation fall above 100 or below 0 as they are percentages
-        print("You have gained 5% more reputation")
-        print("You have lost 5% of your intimidation")
+        colour_print("You have gained 5% more reputation")
+        colour_print("You have lost 5% of your intimidation")
 
     def kill(self):
         """method that does all of the attribute changes when a player kills a hostile"""
@@ -544,13 +544,13 @@ class Player:
         self.intimidation = min(self.intimidation + 5, 100)
         self.reputation = max(self.reputation - 5, 0)
         # min and max ensure that neither intimidation nor reputation fall above 100 or below 0 as they are percentages
-        print("You have gained 5% more intimidation")
-        print("You have lost 5% of your reputation")
+        colour_print("You have gained 5% more intimidation")
+        colour_print("You have lost 5% of your reputation")
 
     def die(self, starting_health, starting_inventory):
         """initiates dying sequence and respawns the player with the amount of health they had before the fight"""
 
-        print("You Died.")
+        colour_print("You Died.")
         self.set_health(starting_health)
         self.set_inventory(starting_inventory)
 
@@ -578,7 +578,7 @@ class Player:
         if self.max_health == self.default_health:
 
             if self.affordable(upgrade_cost_dictionary['health']):
-                print("Your health has been upgraded by " +
+                colour_print("Your health has been upgraded by " +
                       str((self.default_health * upgrade_progression_dictionary['health'][0]) - self.max_health)
                       + " points")
                 self.max_health *= upgrade_progression_dictionary['health'][0]
@@ -587,7 +587,7 @@ class Player:
 
         elif self.max_health / upgrade_progression_dictionary['health'][-1] == self.default_health:
 
-            print("You have already maximized your health upgrades!")
+            colour_print("You have already maximized your health upgrades!")
             # if the player's max health is at the last multiplier then they can no longer upgrade their health
 
         else:
@@ -603,7 +603,7 @@ class Player:
 
                     if self.affordable(upgrade_cost_dictionary['health']):
                         self.max_health = self.default_health * upgrade_progression_dictionary['health']
-                        print("Your health has been upgraded by " +
+                        colour_print("Your health has been upgraded by " +
                               str((self.default_health * upgrade_progression_dictionary['health'][index])
                                   - self.max_health) + " points")
 
@@ -620,7 +620,7 @@ class Player:
         if self.max_charge == self.default_charge:
 
             if self.affordable(upgrade_cost_dictionary['charge']):
-                print("Your charge has been upgraded by " +
+                colour_print("Your charge has been upgraded by " +
                       str(upgrade_progression_dictionary['charge'][0]) + " points")
                 self.max_charge += upgrade_progression_dictionary['charge'][0]
                 # if the player's max health still has not been upgraded
@@ -628,7 +628,7 @@ class Player:
 
         elif self.max_charge - upgrade_progression_dictionary['charge'][-1] == self.default_charge:
 
-            print("You have already maximized your charge upgrades!")
+            colour_print("You have already maximized your charge upgrades!")
             # if the player's max health is at the last multiplier then they can no longer upgrade their health
 
         else:
@@ -644,7 +644,7 @@ class Player:
 
                     if self.affordable(upgrade_cost_dictionary['charge']):
                         self.max_charge = self.default_health + upgrade_progression_dictionary['charge']
-                        print("Your charge has been upgraded by " +
+                        colour_print("Your charge has been upgraded by " +
                               str((self.default_charge + upgrade_progression_dictionary['charge'][index + 1])
                                   - self.max_charge) + " points")
 
@@ -662,7 +662,7 @@ class Player:
         if self.attack_amplification_amount == self.default_attack_amplification_amount:
 
             if self.affordable(upgrade_cost_dictionary['attack_amplification']):
-                print("Your attack amplification has been upgraded by " +
+                colour_print("Your attack amplification has been upgraded by " +
                       str(upgrade_progression_dictionary['attack_amplification'][0]) + " points")
                 self.attack_amplification_amount = \
                     self.default_attack_amplification_amount + upgrade_progression_dictionary['attack_amplification'][0]
@@ -672,7 +672,7 @@ class Player:
         elif self.attack_amplification_amount - upgrade_progression_dictionary['attack_amplification'][-1] \
                 == self.default_attack_amplification_amount:
 
-            print("You have already maximized your attack amplification upgrades!")
+            colour_print("You have already maximized your attack amplification upgrades!")
             # if the player's max health is at the last multiplier then they can no longer upgrade their health
 
         else:
@@ -688,7 +688,7 @@ class Player:
                     if self.affordable(upgrade_cost_dictionary['attack_amplification']):
 
                         self.max_charge = self.default_health + upgrade_progression_dictionary['attack_amplification']
-                        print("Your attack amplification has been upgraded by " +
+                        colour_print("Your attack amplification has been upgraded by " +
                               str((self.default_charge + upgrade_progression_dictionary['attack_amplification']
                                    [index + 1]) - self.attack_amplification_amount) + " points")
 
@@ -702,17 +702,17 @@ class Player:
         if self.health + health_add_amount < self.max_health:
 
             self.health += health_add_amount
-            print("You have replenished " + str(self.heal_amount) + " health")
+            colour_print("You have replenished " + str(self.heal_amount) + " health")
 
         elif self.health < self.max_health:
 
             health_add_amount = self.max_health - self.health
-            print("You have replenished " + str(health_add_amount) + " health")
+            colour_print("You have replenished " + str(health_add_amount) + " health")
             self.health = self.max_health
 
         else:
 
-            print("You are already at max health")
+            colour_print("You are already at max health")
 
             return False
 

@@ -1,5 +1,5 @@
-from save_functions import title_screen
+from gameplay_start import start_game
 
 if __name__ == "__main__":
 
-    title_screen()
+    start_game()
