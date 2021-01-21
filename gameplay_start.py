@@ -2,7 +2,7 @@ import time
 
 from pygame import mixer
 
-from output_formatting import colour_print
+from output_formatting import *
 from gamesave import GameSave
 from save_functions import *
 
@@ -21,18 +21,16 @@ def title_screen(gamesave):
 
     clear_screen()
 
-    mixer.init()
-    mixer.music.load('soundtrack/title_screen_music.mp3')
-    mixer.music.play(-1)
-    # the input -1 loops the title music infinitely
+    play_music('soundtrack/title_screen_music.mp3')
     time.sleep(5)
     colour_print("No One")
     time.sleep(0.5)
     colour_print("Leaves")
     time.sleep(0.5)
     colour_print("The UNIVERSE")
-    time.sleep(4)
-    clear_screen()
+    time.sleep(2)
+    loading_bar("Loading map", "red")
+    loading_bar("Loading assets", "blue")
 
     while True:
 

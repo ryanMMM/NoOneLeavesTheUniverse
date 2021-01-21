@@ -18,7 +18,7 @@ class Attack:
     def apply_attack(self):
         """returns the randomized multiplier"""
 
-        return round(self.multiplier * random.random(1 - self.variance, 1 + self.variance))
+        return self.multiplier * random.uniform((1 - self.variance), (1 + self.variance))
 
     def get_buff(self):
 

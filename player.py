@@ -161,7 +161,20 @@ class Player:
 
         if len(self.inventory) >= self.inventory_space:
 
-            colour_print("Your inventory is full")
+            colour_print("Your inventory is full!")
+
+            return True
+
+        else:
+
+            return False
+
+    def inventory_empty(self):
+        """checks if inventory is empty"""
+
+        if len(self.inventory) == 0:
+
+            colour_print("Your inventory is empty!")
 
             return True
 
@@ -222,7 +235,7 @@ class Player:
     def inventory_interface(self):
         """allows the player to look through their inventory and send items to their safe"""
 
-        while len(self.inventory) > 0:
+        while not self.inventory_empty():
 
             # inventory interface is not available if a player's inventory is empty
             self.display_inventory()
@@ -244,8 +257,8 @@ class Player:
 
                 else:
 
-                    colour_print("Invalid input", "red")
-                    # prompts the player again if invalid input
+                    invalid_input()
+                    # prompts the player again
 
             elif inventory_choice == 'back' or inventory_choice == 'b':
 
@@ -254,15 +267,14 @@ class Player:
 
             else:
 
-                colour_print("Invalid input", "red")
-                # prompts the user again if invalid input
+                invalid_input()
+                # prompts the user again
 
     def safe_interface(self):
         """allows the player to look through their safe and send items to their inventory"""
 
         while True:
 
-            self.display_inventory()
             self.display_safe()
 
             colour_print("Would you like to (T)ake an item into your inventory, "
@@ -292,7 +304,7 @@ class Player:
 
                         else:
 
-                            colour_print("Invalid input", "red")
+                            invalid_input()
 
                     elif equip_choice == 'c' or equip_choice == 'collectible':
 
@@ -307,8 +319,8 @@ class Player:
 
                         else:
 
-                            colour_print("Invalid input", "red")
-                            # prompts the user again if invalid input
+                            invalid_input()
+                            # prompts the user again
 
                     elif equip_choice == 'b' or equip_choice == 'back':
 
@@ -316,8 +328,8 @@ class Player:
 
                     else:
 
-                        colour_print("Invalid input", "red")
-                        # prompts the user again if invalid input
+                        invalid_input()
+                        # prompts the user again
 
             elif safe_choice == 'p' or safe_choice == 'put':
 
@@ -344,7 +356,7 @@ class Player:
 
                 else:
 
-                    colour_print("Invalid input", "red")
+                    invalid_input()
 
             elif safe_choice == 'c' or safe_choice == 'change':
 
@@ -365,7 +377,7 @@ class Player:
 
                 else:
 
-                    colour_print("Invalid input", "red")
+                    invalid_input()
                     # prompts the user again if invalid input
 
             elif safe_choice == 'b' or safe_choice == 'back':
@@ -378,7 +390,7 @@ class Player:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
                 # prompts the user again if invalid input
 
     def display_inventory(self):

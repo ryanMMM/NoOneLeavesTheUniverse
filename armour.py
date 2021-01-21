@@ -5,8 +5,8 @@ class Armour:
         self.name = name
         self.defence = defence
         # base defence points for an armour piece
-        self.set = armour_set
-        # set of armour, if all a player's armour pieces are the same group, they get a special set bonus
+        self.armour_set = armour_set
+        # the type of armour
         self.slot = ''
         # slot of armour, where it is equipped by the player, i.e. head, chest, feet
         self.cost = cost
@@ -21,7 +21,7 @@ class Armour:
 
     def get_set(self):
 
-        return self.set
+        return self.armour_set
 
     def get_slot(self):
 

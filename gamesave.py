@@ -26,8 +26,6 @@ import time
 import random
 import json
 
-from pygame import mixer
-
 from player import Player
 from hostile import Hostile
 from buff import Buff
@@ -91,11 +89,12 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
 
         time.sleep(0.5)
         colour_print("Impressive. You're now ready to go out into the UNIVERSE.\nPRESS ENTER TO CONTINUE")
         input()
+        play_music('soundtrack/village_music.mp3')
         self.gates_of_village()
 
     def gates_of_village(self):
@@ -112,10 +111,7 @@ class GameSave:
 
             if venture_choice == 'w' or venture_choice == 'wilderness':
 
-                mixer.init()
-                mixer.music.load('soundtrack/wilderness_music.mp3')
-                mixer.music.play(-1)
-                # loops the wilderness soundtrack
+                play_music('soundtrack/wilderness_music.mp3')
                 self.wilderness()
                 break
                 # once they enter the wilderness, they no longer need the gates of the village gameplay loop
@@ -132,7 +128,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
                 # prompts the user again if invalid input
 
     def random_event(self, biome):
@@ -202,6 +198,12 @@ class GameSave:
                 self.player.move('w')
                 break
 
+            elif wilderness_choice == 'r' or wilderness_choice == 'return':
+
+                self.player.spawn_at_village()
+                self.gates_of_village()
+                break
+
             elif wilderness_choice == 'q' or wilderness_choice == 'quit':
 
                 save_quit(self)
@@ -209,7 +211,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
 
     def enter_new_tile(self):
         """updates all the necessary player attributes and starts any events based on the tile position of the player"""
@@ -239,10 +241,7 @@ class GameSave:
     def village(self):
         """starts the village gameplay loop"""
 
-        mixer.init()
-        mixer.music.load('soundtrack/village_music.mp3')
-        mixer.music.play(-1)
-        # loops the village music
+        play_music('soundtrack/village_music.mp3')
 
         # starts the respective methods to take the user to where they would like to go based on input
         while True:
@@ -294,7 +293,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
                 # prompts the user again if invalid input
 
     def forgery(self):
@@ -334,7 +333,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid statement")
+                invalid_input()
                 # prompts the user again
 
     def potion_shop(self):
@@ -379,7 +378,7 @@ class GameSave:
 
                 else:
 
-                    colour_print("Invalid input", "red")
+                    invalid_input()
 
             elif potion_shop_choice == 'l' or potion_shop_choice == 'leave':
 
@@ -441,7 +440,7 @@ class GameSave:
 
                 else:
 
-                    colour_print("Invalid input", "red")
+                    invalid_input()
 
             elif weapon_dealer_choice == 'l' or weapon_dealer_choice == 'leave':
 
@@ -485,7 +484,7 @@ class GameSave:
                         colour_print(
                             str(index) + ". " + armour_order_list[index % len(armour_order_list)].capitalize() + ": "
                             + str(armour_group[armour_piece]) + "\nCost: "
-                            + str(armour_group[armour_piece].get_cost()) * self.player.get_price_multiplier())
+                            + str(armour_group[armour_piece].get_cost() * self.player.get_price_multiplier()))
                         # loops through and colour_prints all the armor pieces within each set of armour
 
                         index += 1
@@ -493,7 +492,7 @@ class GameSave:
                 colour_print(str(index) + ". Back out")
 
                 colour_print("Which armour piece would you like to purchase? (Enter the number of the armour piece)")
-                armour_choice = str_input()
+                armour_choice = int_input()
 
                 if armour_choice < index:
                     # checks if the selection is within range of the list of weapons
@@ -513,7 +512,7 @@ class GameSave:
 
                 else:
 
-                    colour_print("Invalid input", "red")
+                    invalid_input()
 
             elif armour_shop_choice == 'l' or armour_shop_choice == 'leave':
 
@@ -526,7 +525,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
 
     def upgrade_center(self):
         """starts the upgrade center game loop, allowing the player to upgrade their attributes"""
@@ -557,7 +556,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
 
     def marketplace(self):
         """starts the weapon dealer game loop, allowing the player to sell collectibles"""
@@ -598,7 +597,7 @@ class GameSave:
 
                     else:
 
-                        colour_print("Invalid input", "red")
+                        invalid_input()
 
                 else:
 
@@ -614,7 +613,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
 
     def open_safe(self):
 
@@ -639,7 +638,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
 
     def village_save(self):
 
@@ -649,11 +648,7 @@ class GameSave:
     def fight(self):
         """starts a fight gameplay loop between the current hostile and player"""
 
-        mixer.init()
-        mixer.music.load('soundtrack/fight_music.mp3')
-        mixer.music.play(-1)
-        # loops the fight music
-
+        play_music('soundtrack/fight_music.mp3')
         self.hostile.change_difficulty_multiplier(self.difficulty_multiplier)
         # ensures that the hostile has the correct attributes according to the difficulty multiplier
         clear_screen()
@@ -744,7 +739,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
 
     def player_turn(self):
         """starts the player's turn during a fight, prompting them on what they would like to do"""
@@ -769,7 +764,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
                 # prompts the user again if invalid input
 
     def choose_attack(self):
@@ -795,13 +790,15 @@ class GameSave:
                 # loads the attack object corresponding to the player's selection
                 base_damage = self.player.weapon.get_damage()
                 # loads the base damage in the player's weapon
-                attack_multiplier = chosen_attack.get_multiplier()
+                attack_multiplier = chosen_attack.apply_attack()
                 # loads the attack multiplier corresponding to the player's selection
-                damage = base_damage * attack_multiplier * self.attack_amplification
+                damage = int(base_damage * attack_multiplier * self.attack_amplification)
                 # calculates the damage dealt to the enemy by multiplying the variables
 
                 if str(chosen_attack.get_buff()):
-                    self.hostile.add_buff(Buff(chosen_attack.buff))
+
+                    self.hostile.add_buff(chosen_attack.get_buff())
+                    colour_print("You have inflicted " + str(chosen_attack.get_buff()) + " on " + str(self.hostile))
                     # if the attack has a buff in it, that buff is applied to the enemy
 
                 self.hostile.lose_health_from_attack(damage, str(self.player))
@@ -820,7 +817,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
                 # prompts the user again if invalid input is given
 
     def choose_action(self):
@@ -836,21 +833,29 @@ class GameSave:
 
                 self.player.heal()
 
+                break
+
             elif action_choice == 'a' or action_choice == 'amplify':
 
                 self.attack_amplification += 1.5
+
+                break
 
             elif action_choice == 'u' or action_choice == 'use':
 
                 self.choose_potion()
 
+                break
+
             elif action_choice == 'b' or action_choice == 'back':
 
                 self.player_turn()
 
+                break
+
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
                 # prompts the user again if invalid input is given
 
     def choose_potion(self):
@@ -886,13 +891,17 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
                 # prompts the user again if invalid input is given
 
     def hostile_turn(self):
         """starts the hostile's turn"""
 
         self.player.lose_health_from_attack(self.hostile.get_damage(), str(self.hostile))
+
+    def change_difficulty_multiplier(self, difficulty_multiplier):
+
+        self.difficulty_multiplier = difficulty_multiplier
 
     def spare_or_kill(self):
         """starts the spare of kill part of a battle, when a player chooses whether to spare or kill an hostile"""
@@ -917,7 +926,7 @@ class GameSave:
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
                 # prompts the user again if invalid input is given
 
     def unpack_tiles(self):

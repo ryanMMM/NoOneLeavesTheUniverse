@@ -49,7 +49,6 @@ def new_game(gamesave):
 
     while True:
 
-        clear_screen()
         colour_print("Enter your name warrior")
         player_name = str_input()
 
@@ -71,7 +70,7 @@ def new_game(gamesave):
 
     while True:
 
-        colour_print("What difficulty would you like to play on?\n(E)asy\n(M)edium\n(H)ard\n\n(Q) to Quit Game")
+        colour_print("What difficulty would you like to play on?\n(E)asy\n(M)edium\n(H)ard\n(Q) to Quit Game")
         difficulty = str_input()
 
         # changes difficulty multiplier based on user input
@@ -105,7 +104,7 @@ def new_game(gamesave):
 
     new_gamesave.player.change_weapon(weapon_object_dictionary['starter_weapon'])
     # gives the player the starter weapon at the beginning of the game
-    new_gamesave.set_up_difficulty_multiplier(difficulty_multiplier)
+    new_gamesave.change_difficulty_multiplier(difficulty_multiplier)
     # goes through the enemies in the enemy object dictionary and applies difficulty multiplier
     new_gamesave.player.change_name(player_name)
     # change's the player object's name to the chosen name

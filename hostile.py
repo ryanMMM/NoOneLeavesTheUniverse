@@ -1,7 +1,6 @@
 import random
 
 from output_formatting import *
-# TODO redesign difficulty multiplier
 
 # import Weapons
 # import Attacks
@@ -55,26 +54,37 @@ class Hostile:
         """adds the amount of health specified in the parameter to the player's health"""
 
         if self.health + health_add_amount < self.max_health:
+
             self.health += health_add_amount
             colour_print(self.name + " has replenished " + str(health_add_amount) + " health")
+
         else:
+
             health_add_amount = self.max_health - self.health
             colour_print(self.name + " has replenished " + str(health_add_amount) + " health")
             self.health = self.max_health
+
         if not health_add_amount:
+
             colour_print("You are already at max health!")
+
         return health_add_amount
 
     def lose_health(self, health_lose_amount):
         """causes the hostile to lose an amount of health specified by the parameter"""
 
         health_lose_amount = (health_lose_amount - (health_lose_amount * (self.defence / 50)))
+
         if self.health - health_lose_amount > 0:
+
             self.health -= health_lose_amount
+
         else:
+
             health_lose_amount = self.health
             self.health = 0
             self.die()
+
         return health_lose_amount
 
     def apply_buffs(self):
@@ -93,13 +103,13 @@ class Hostile:
                 elif buff.get_effect() == 'regeneration':
 
                     regeneration_amount = (self.heal_amount / 2) * buff.get_effectiveness()
-                    colour_print(self.name + "has regenerated " + str(regeneration_amount) + " health from poison")
+                    colour_print(self.name + "has regenerated " + str(regeneration_amount) + " health.")
                     self.add_health(regeneration_amount)
 
                 elif buff.get_effect() == 'poison':
 
-                    poison_amount = self.heal_amount * buff.get_effectiveness()
-                    colour_print(self.name + "has lost " + str(poison_amount) + " health from poison")
+                    poison_amount = self.heal_amount * (50 / buff.get_effectiveness())
+                    colour_print(self.name + " has lost " + str(poison_amount) + " health from poison")
                     self.lose_health(self.heal_amount * buff.get_effectiveness())
 
                 buff.apply_buff()
