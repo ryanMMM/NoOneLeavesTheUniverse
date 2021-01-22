@@ -2,9 +2,6 @@ import random
 
 from output_formatting import *
 
-# import Weapons
-# import Attacks
-
 
 class Hostile:
 
@@ -27,8 +24,8 @@ class Hostile:
         self.defence = defence
         self.default_defence = self.defence
         self.base_defence = self.defence
-        # self.weapon = Weapons.Weapon('Scythe', 10)
         self.default_coins = coins
+        self.coins = self.default_coins
         # the amount of coins a hostile drops when killed which is increased in harder difficulties
         self.weakness = weakness
         self.active_buffs = []
@@ -108,7 +105,7 @@ class Hostile:
 
                 elif buff.get_effect() == 'poison':
 
-                    poison_amount = self.heal_amount * (50 / buff.get_effectiveness())
+                    poison_amount = self.heal_amount * (100 / buff.get_effectiveness())
                     colour_print(self.name + " has lost " + str(poison_amount) + " health from poison")
                     self.lose_health(self.heal_amount * buff.get_effectiveness())
 

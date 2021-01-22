@@ -81,15 +81,12 @@ class Player:
 
         return self.add_health(self.heal_amount)
 
-    def move(self, direction, steps=1):
+    def move(self, vector):
         """moves player to their intended destination"""
 
-        destination_coordinates = self.get_destination_coordinates_and_entrance(direction, steps)['destination']
-        # stores the coordinates of the tile the player has chosen to move to
-        destination_entrance = self.get_destination_coordinates_and_entrance(direction, steps)['entrance']
-        # stores the coordinates of the tile the player will enter from
-        destination_index = self.get_destination_tile_index(direction, steps)
-        # stores the tile index of the tile the player has chosen to move to
+        destination_coordinates = [self.x + vector[0], self.y + vector[1]]
+        # applies the effects of the vector passed in to the player coordinates
+        destination_index = calculate_tile_list_index(self.gamesave.get_x_size(), destination_coordinates)
 
         # checking edge cases
         if destination_coordinates[0] > self.gamesave.get_x_size():
@@ -112,7 +109,7 @@ class Player:
             colour_print("You cannot move west, you are on the west edge of the UNIVERSE")
             self.gamesave.wilderness()
 
-        elif self.gamesave.tile_list[destination_index].is_passable(destination_entrance):
+        elif self.gamesave.tile_list[destination_index].is_passable(self.coordinates):
 
             self.update_coordinates(destination_coordinates)
             self.update_tile_list_index()
@@ -258,7 +255,6 @@ class Player:
                 else:
 
                     invalid_input()
-                    # prompts the player again
 
             elif inventory_choice == 'back' or inventory_choice == 'b':
 
@@ -268,7 +264,6 @@ class Player:
             else:
 
                 invalid_input()
-                # prompts the user again
 
     def safe_interface(self):
         """allows the player to look through their safe and send items to their inventory"""
@@ -320,7 +315,6 @@ class Player:
                         else:
 
                             invalid_input()
-                            # prompts the user again
 
                     elif equip_choice == 'b' or equip_choice == 'back':
 
@@ -329,7 +323,6 @@ class Player:
                     else:
 
                         invalid_input()
-                        # prompts the user again
 
             elif safe_choice == 'p' or safe_choice == 'put':
 
@@ -378,7 +371,6 @@ class Player:
                 else:
 
                     invalid_input()
-                    # prompts the user again if invalid input
 
             elif safe_choice == 'b' or safe_choice == 'back':
 
@@ -391,7 +383,6 @@ class Player:
             else:
 
                 invalid_input()
-                # prompts the user again if invalid input
 
     def display_inventory(self):
 
@@ -791,35 +782,6 @@ class Player:
         navigation_stats = self.name + "'s coordinates: [" + str(self.x) + ", " + str(self.y) + "]\n"
 
         return navigation_stats
-
-    def get_destination_coordinates_and_entrance(self, direction, steps):
-        """returns the coordinates of the tile that the player chooses to walk to, and the tile they will enter from"""
-
-        if direction == 'n':
-
-            return {'destination': [self.x, self.y + steps], 'entrance': [self.x, self.y + steps - 1]}
-
-        elif direction == 's':
-
-            return {'destination': [self.x, self.y - steps], 'entrance': [self.x, self.y - steps + 1]}
-
-        elif direction == 'e':
-
-            return {'destination': [self.x + steps, self.y], 'entrance': [self.x + steps - 1, self.y]}
-
-        elif direction == 'w':
-
-            return {'destination': [self.x - steps, self.y], 'entrance': [self.x - steps + 1, self.y]}
-
-        else:
-
-            raise ValueError
-
-    def get_destination_tile_index(self, direction, steps):
-        """returns the tile index of the tile that the player chooses to walk to"""
-
-        return calculate_tile_list_index(self.gamesave.get_x_size(),
-                                         self.get_destination_coordinates_and_entrance(direction, steps)['destination'])
 
     def get_potions(self):
         """loops through the inventory and returns a list of potions"""

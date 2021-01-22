@@ -51,4 +51,4 @@ def title_screen(gamesave):
 
         else:
 
-            colour_print("Invalid input", "red")
+            invalid_input()

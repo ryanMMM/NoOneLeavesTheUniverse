@@ -3,7 +3,7 @@ import sys
 import time
 from os import path
 
-from output_formatting import clear_screen, str_input, colour_print, loading_bar
+from output_formatting import *
 from constant_objects import weapon_object_dictionary
 
 
@@ -98,9 +98,7 @@ def new_game(gamesave):
 
         else:
 
-            colour_print("Invalid input", "red")
-            time.sleep(2)
-            # prompts the user again
+            invalid_input()
 
     new_gamesave.player.change_weapon(weapon_object_dictionary['starter_weapon'])
     # gives the player the starter weapon at the beginning of the game
@@ -154,7 +152,7 @@ def load_game(gamesave):
 
             else:
 
-                colour_print("Invalid input", "red")
+                invalid_input()
 
         else:
 
@@ -179,7 +177,7 @@ def load_game(gamesave):
 
                 else:
 
-                    colour_print("Invalid input", "red")
+                    invalid_input()
 
 
 def start_loaded_game(gamesave):

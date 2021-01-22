@@ -7,7 +7,7 @@ from rich.progress import track
 from rich.console import Console
 
 
-def colour_print(string, font_colour="green", background_colour="black",
+def colour_print(string, font_colour="blue", background_colour="white",
                  allignment="center"):
 
     console = Console()

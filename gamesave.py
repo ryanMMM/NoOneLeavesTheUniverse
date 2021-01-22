@@ -65,7 +65,7 @@ class GameSave:
 
         colour_print("Welcome to the UNIVERSE.\nA 13x15 grid sprawling with monsters to fight."
                      "\nYou can seek refuge in the village, where you can find all kinds of shops to gear up for the "
-                     "challenge ahead.\nWhen you're ready adventure, you can leave into the wilderness."
+                     "challenge ahead.\nWhen you're ready for adventure, you can leave into the wilderness."
                      "\nPRESS ENTER TO CONTINUE")
         input()
         colour_print("You will have weapons (each with their own unique attacks) and potions at your disposal."
@@ -146,11 +146,12 @@ class GameSave:
             time.sleep(0.25)
             clear_screen()
             self.hostile = random.choice(hostile_object_dictionary[biome])
-            # loads a random hostile from the list of hostiles
+            # loads a random hostile from the list of hostiles from the biome that the player is in
 
             if self.fight():
 
                 for buff in self.player.active_buffs:
+                    
                     self.player.remove_buff(buff)
 
                 # removes all the active buffs the player recieved during the fight
@@ -180,22 +181,26 @@ class GameSave:
 
             if wilderness_choice == 'n' or wilderness_choice == 'north':
 
-                self.player.move('n')
+                self.player.move([0, 1])
+                # north increases the y value by 1
                 break
 
             elif wilderness_choice == 's' or wilderness_choice == 'south':
 
-                self.player.move('s')
+                self.player.move([0, -1])
+                # south decreases the y value by 1
                 break
 
             elif wilderness_choice == 'e' or wilderness_choice == 'east':
 
-                self.player.move('e')
+                self.player.move([1, 0])
+                # east increases the x value by 1
                 break
 
             elif wilderness_choice == 'w' or wilderness_choice == 'west':
 
-                self.player.move('w')
+                self.player.move([-1, 0])
+                # west decreases the x value by 1
                 break
 
             elif wilderness_choice == 'r' or wilderness_choice == 'return':
@@ -230,6 +235,7 @@ class GameSave:
         elif self.player_tile.get_composition() == 'village':
 
             self.gates_of_village()
+            # if player approaches village, call gates of village method
 
         else:
 
